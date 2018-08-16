@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import { Button, FormInput } from 'react-native-elements';
-import InnerMargin from '../innerMargin';
+import InnerMargin from './innerMargin';
 
 export default class Login extends Component {
   render() {
@@ -10,7 +10,7 @@ export default class Login extends Component {
       <View>
         <View style={styles.logoContainer}>
           <Image
-          style={styles.logo} source={require('../../images/coffecup.png')}/>
+          style={styles.logo} source={require('../images/CafeReactNativeLogoV1.png')}/>
           <Text style={styles.title}>Cafe React Native</Text>
         </View>
 

@@ -4,6 +4,12 @@ import { Button, FormInput } from 'react-native-elements';
 import InnerMargin from './innerMargin';
 
 export default class Login extends Component {
+  static navigationOptions = {
+     title: 'Please sign in',
+   };
+
+
+
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -16,16 +22,25 @@ export default class Login extends Component {
 
         <InnerMargin>
         <FormInput placeholder="Email" style={styles.inputStyle}
-        placeholderTextColor="#3AD7FF"/>
+        placeholderTextColor="yellow"/>
         </InnerMargin>
-        <FormInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#3AD7FF"/>
+        <FormInput placeholder="Password" secureTextEntry={true} placeholderTextColor="yellow"/>
 
         <InnerMargin></InnerMargin>
-        <Button title="Login" backgroundColor="#3AD7FF" color='black'/>
+        <Button title="Login" backgroundColor="yellow" color='black'/>
+
+      </View>
+      <View style={styles.container}>
+             <Button title="Sign in!" onPress={this._signInAsync} />
       </View>
       </KeyboardAvoidingView>
     );
   }
+
+  _signInAsync = async () => {
+  // await AsyncStorage.setItem('userToken', 'abc');
+    this.props.navigation.navigate('App');
+  };
 
 }
 

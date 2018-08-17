@@ -8,8 +8,6 @@ export default class Login extends Component {
      title: 'Please sign in',
    };
 
-
-
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -38,7 +36,7 @@ export default class Login extends Component {
   }
 
   _signInAsync = async () => {
-  // await AsyncStorage.setItem('userToken', 'abc');
+    // await AsyncStorage.setItem('userToken', 'abc');
     this.props.navigation.navigate('App');
   };
 

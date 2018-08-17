@@ -4,7 +4,7 @@ import InnerMargin from './innerMargin';
 
 export default class Home extends Component {
   static navigationOptions = {
-   title: 'Wellcome HOme',
+   title: 'Welcome home',
  };
 
   render() {
@@ -12,7 +12,7 @@ export default class Home extends Component {
 
       <View style={styles.container}>
       <Button title="Show me more of the app" onPress={this._showMoreApp} />
-          <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+          <Button title="Sign out" onPress={this._signOutAsync} />
       </View>
 
     );
@@ -26,7 +26,6 @@ export default class Home extends Component {
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   };
-
 }
 
 const styles = StyleSheet.create({

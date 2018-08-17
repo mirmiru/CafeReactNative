@@ -10,10 +10,9 @@ import {
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 
-
 export default class FinalOrder extends React.Component {
   static navigationOptions = {
-    title: 'Order STuff',
+    title: 'Your order',
   };
 
   render() {

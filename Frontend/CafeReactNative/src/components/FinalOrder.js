@@ -25,7 +25,6 @@ export default class FinalOrder extends React.Component {
   }
 
   _signOutAsync = async () => {
-    await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   };
 }

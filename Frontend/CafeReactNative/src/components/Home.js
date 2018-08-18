@@ -4,15 +4,15 @@ import InnerMargin from './innerMargin';
 
 export default class Home extends Component {
   static navigationOptions = {
-   title: 'Welcome home',
- };
+    title: 'Welcome home',
+  };
 
   render() {
     return (
 
       <View style={styles.container}>
-      <Button title="Show me more of the app" onPress={this._showMoreApp} />
-          <Button title="Sign out" onPress={this._signOutAsync} />
+        <Button title="Show me more of the app" onPress={this._showMoreApp} />
+        <Button title="Sign out" onPress={this._signOutAsync} />
       </View>
 
     );

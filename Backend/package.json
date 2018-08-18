@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/mirmiru/CafeReactNative/issues"
   },
-  "homepage": "https://github.com/mirmiru/CafeReactNative#readme"
+  "homepage": "https://github.com/mirmiru/CafeReactNative#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongodb": "^3.1.3"
+  }
 }

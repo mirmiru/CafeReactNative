@@ -30,14 +30,14 @@ var app = express();
 
 app.get('/', function (request, response) {
   // test push
-  // db.collection('cities').find().toArray(function (error, result) {
-  //   if (error) {
-  //     response.status(500).send({});
-  //     return;
-  //   }
-  // console.log(result);
-  //
-  // });
+  db.collection('CaMenu').find().toArray(function (error, result) {
+    if (error) {
+      response.status(500).send({});
+      return;
+    }
+    console.log(result);
+    response.status(200).send({});
+  });
 });
 
 app.listen(3000, function () {

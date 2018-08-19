@@ -10,8 +10,19 @@ MongoClient.connect('mongodb://localhost:27017', function (error, client) {
   } else {
     console.log('Successfully connect to the database!');
     db = client.db('Cafe');
-// behöver en check om den finns.
-// db.collection('CaMenu').insert(originalMenu);
+
+    db.listCollections({ name: 'CaMenu' })
+    .next(function(error, collinfo) {
+      if (!collinfo) {
+        db.collection('CaMenu').insertMany(originalMenu, function (error, result) {
+          if (error) {
+            console.log("The menu couln't be inserted into MongoDB");
+          } else {
+            console.log('Added the original menu!');
+          }
+        });
+      }
+    });
   }
 });
 

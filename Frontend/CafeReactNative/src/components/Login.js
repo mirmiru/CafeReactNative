@@ -5,13 +5,14 @@ import InnerMargin from './innerMargin';
 
 export default class Login extends Component {
   static navigationOptions = {
-     title: 'Please sign in',
+     //title: 'Please sign in',
+     header: null
    };
 
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <View>
+
         <View style={styles.logoContainer}>
           <Image
           style={styles.logo} source={require('../images/CafeReactNativeLogoV1.png')}/>
@@ -20,17 +21,19 @@ export default class Login extends Component {
 
         <InnerMargin>
         <FormInput placeholder="Email" style={styles.inputStyle}
-        placeholderTextColor="yellow"/>
+        placeholderTextColor="#808080"/>
         </InnerMargin>
-        <FormInput placeholder="Password" secureTextEntry={true} placeholderTextColor="yellow"/>
+        <FormInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
 
         <InnerMargin></InnerMargin>
-        <Button title="Login" backgroundColor="yellow" color='black'/>
+        <Button title="Login" backgroundColor="yellow" color='black'
+        onPress={this._signInAsync}/>
 
-      </View>
-      <View style={styles.container}>
+
+      {/*<View style={styles.container}>
              <Button title="Sign in!" onPress={this._signInAsync} />
-      </View>
+      </View>*/}
+
       </KeyboardAvoidingView>
     );
   }
@@ -56,12 +59,12 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120
   },
-  title: {
-    color: 'grey',
-    marginTop: 10,
-    width: 170,
-    textAlign: 'center',
-    opacity: 0.8,
-    marginTop: 14
-  }
+  // title: {
+  //   color: 'grey',
+  //   marginTop: 10,
+  //   width: 170,
+  //   textAlign: 'center',
+  //   opacity: 0.8,
+  //   marginTop: 14
+  // }
 });

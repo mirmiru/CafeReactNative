@@ -1,4 +1,3 @@
-/* global localStorage */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import { Button, FormInput } from 'react-native-elements';
@@ -13,17 +12,15 @@ export default class Login extends Component {
   };
 
   componentDidMount() {
-    if (typeof localStorage === "undefined" || localStorage === null) {
-      localStorage = require('localstorage');
+    /*if (typeof localStorage === "undefined" || localStorage === null) {
+      localStorage = require('node-localstorage').LocalStorage;
+      localStorage = new LocalStorage('./scratch');
     }
-    this.hydrateStateWithLocalStorage();
+    this.hydrateStateWithLocalStorage();*/
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      userList: []
-    };
   }
 
   hydrateStateWithLocalStorage() {
@@ -32,16 +29,18 @@ export default class Login extends Component {
       // if the key exists in localStorage
       if (localStorage.hasOwnProperty(key)) {
         // get the key's value from localStorage
-        let value = localStorage.get(key);
+        let value = localStorage.getItem(key);
 
-        // parse the localStorage string and setState
+        // parse the localStorage string and set state
         try {
           value = JSON.parse(value);
           this.setState({ [key]: value });
         } catch (error) {
           // handle empty string
-          this.setState({ [key]: "" });
+          this.setState({ [key]: [] });
         }
+      } else {
+        this.setState({ [key]: [] })
       }
     }
   }
@@ -62,7 +61,7 @@ export default class Login extends Component {
     // update state with new list
     this.setState({ list });
 
-    localStorage.put("userList", JSON.stringify(list));
+    localStorage.setItem("userList", JSON.stringify(list));
   }
 
   loginSuccess(email, password) {
@@ -104,7 +103,7 @@ export default class Login extends Component {
     );
   }
 
-  function logIn() {
+  logIn() {
     this.addUser('eric','3');
 
     let emailForm = this.document.getElementById('Email');

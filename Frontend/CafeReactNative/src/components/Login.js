@@ -26,7 +26,7 @@ export default class Login extends Component {
         <FormInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
 
         <InnerMargin></InnerMargin>
-        <Button title="Login" backgroundColor="yellow" color='black'
+        <Button title="Login" backgroundColor="#808080" color='black'
         onPress={this._signInAsync}/>
 
 

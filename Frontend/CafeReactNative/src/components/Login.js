@@ -1,7 +1,10 @@
+/* global localStorage */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import { Button, FormInput } from 'react-native-elements';
 import InnerMargin from './innerMargin';
+
+var localStorage;
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -9,39 +12,60 @@ export default class Login extends Component {
     header: null
   };
 
+  componentDidMount() {
+    if (typeof localStorage === "undefined" || localStorage === null) {
+      localStorage = require('localstorage');
+    }
+    this.hydrateStateWithLocalStorage();
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      newUser: "",
       userList: []
     };
   }
 
-  updateInput(key, value) {
-    this.setState({ [key]: value });
+  hydrateStateWithLocalStorage() {
+
+    for (let key in this.state) {
+      // if the key exists in localStorage
+      if (localStorage.hasOwnProperty(key)) {
+        // get the key's value from localStorage
+        let value = localStorage.get(key);
+
+        // parse the localStorage string and setState
+        try {
+          value = JSON.parse(value);
+          this.setState({ [key]: value });
+        } catch (error) {
+          // handle empty string
+          this.setState({ [key]: "" });
+        }
+      }
+    }
   }
 
   addUser(email, password) {
-    // create a new item
+
     const newUser = {
       email: email,
       password: password
     };
 
     // copy current list of items
-    const list = [...this.state.userList];
+    var list = this.state.userList;
 
     // add the new item to the list
     list.push(newUser);
 
-    // update state with new list, reset the new user input
-    this.setState({
-      list,
-      newUser: ""
-    });
+    // update state with new list
+    this.setState({ list });
+
+    localStorage.put("userList", JSON.stringify(list));
   }
 
-  logIn(email, password) {
+  loginSuccess(email, password) {
     for (var i = 0; i < this.state.userList.length; i++) {
       let user = this.state.userList[i];
       if (user.email === email && user.password === password) {
@@ -80,15 +104,22 @@ export default class Login extends Component {
     );
   }
 
+  function logIn() {
+    this.addUser('eric','3');
+
+    let emailForm = this.document.getElementById('Email');
+    let passwordForm = this.document.getElementById('Password');
+
+    console.log(emailForm.value);
+
+    if (this.loginSuccess(emailForm.value, passwordForm.value)) {
+      this.props.navigation.navigate('App');
+    }
+  }
+
   _signInAsync = async () => {
     // await AsyncStorage.setItem('userToken', 'abc');
-    this.addUser('eric','3');
-    /*let emailForm = this.document.getElementById('Email');
-    let passwordForm = this.document.getElementById('Password');
-    console.log(emailForm.value);
-    if (this.logIn(emailForm.value, passwordForm.value)) {
-      this.props.navigation.navigate('App');
-    }*/
+    //logIn();
     this.props.navigation.navigate('App');
   };
 

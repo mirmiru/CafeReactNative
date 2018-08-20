@@ -32,33 +32,61 @@ export default class Menu extends Component {
   constructor(props) {
     super();
     this.state = {
-      counter: 0
+      menu: [
+        {
+          name: 'Americano',
+          cups: 0
+        },
+        {
+          name: 'Coffee',
+          cups: 0
+        },
+        {
+          name: 'Latte',
+          cups: 0
+        }
+      ]
     }
   }
-  decreaseCounter() {
-    this.setState({counter: this.state.counter-1});
+  decreaseCounter(item, index) {
+    var update = Object.assign(this.state.menu[index]);
+    update.cups = update.cups-1;
+    console.log('New drink values:', update);
+    this.setState({
+      menu: [...this.state.menu.slice(0, index),
+      Object.assign({}, this.state.menu[index], update),
+      ...this.state.menu.slice(index+1)]
+    });
+    console.log(this.state);
   }
-  increaseCounter(event) {
-    console.warn(event);
-    var value = this.state.counter+1;
-    this.setState({counter: value});
+  increaseCounter(item, index) {
+    var update = Object.assign(this.state.menu[index]);
+    update.cups = update.cups+1;
+    console.log('New drink values:', update);
+    this.setState({
+      menu: [...this.state.menu.slice(0, index),
+      Object.assign({}, this.state.menu[index], update),
+      ...this.state.menu.slice(index+1)]
+    });
   }
-  renderDrink({item, index}) {
+  renderDrink = ({item, index}) => {
+    console.log(this.state.menu[index].cups);
     return (
-      <View style={gridStyle.item}>
-      <Image source={String(item.img)} />
+      <View item={item} style={gridStyle.item}>
+      <Image source={item.img} />
           <Text style={gridStyle.itemText}>{item.name} ({item.price})</Text>
           <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={() => this.decreaseCounter}><Text style={gridStyle.itemText}> &#8722; </Text></TouchableOpacity>
-          <Text style={gridStyle.itemText}> {this.state.counter} </Text>
-          <TouchableOpacity onPress={() => this.increaseCounter}><Text style={gridStyle.itemText}> &#43; </Text></TouchableOpacity>
+          <TouchableOpacity onPress={item => this.decreaseCounter(item, index)}><Text style={gridStyle.itemText}> &#8722; </Text></TouchableOpacity>
+          <Text style={gridStyle.itemText}> {this.state.menu[index].cups} </Text>
+          <TouchableOpacity onPress={item => this.increaseCounter(item, index)}><Text style={gridStyle.itemText}> &#43; </Text></TouchableOpacity>
         </View>
       </View>
     );
   }
   render() {
+    console.log('Render');
     return (
-    <FlatList keyExtractor={item => item.id} data={menuData} renderItem={this.renderDrink} numColumns={2}>
+    <FlatList keyExtractor={item => item.id} data={menuData} renderItem={this.renderDrink} extraData={this.state} numColumns={2}>
     </FlatList>
     );
   }

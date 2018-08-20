@@ -3,27 +3,54 @@ import { View, Text, StyleSheet, Image, List, FlatList, Dimensions, TouchableOpa
 import InnerMargin from './innerMargin';
 
 const menuData = [
-  {
-    img: require("../images/americano.png"),
-    name: "Americano",
-    price: 2.50
-  },
-  {
-    img: require("../images/dripcoffee.png"),
-    name: "Coffee",
-    price: 2.50
-  },
-  {
-    img: require("../images/latte.png"),
-    name: "Latte",
-    price: 2.80
-  }
-  // ,
-  // {
-  //   img: require("../images/hottea.png"),
-  //   name: "Tea",
-  //   price: 2.80
-  // }
+      {
+        id: 'espresso',
+        img: require("../images/espresso.png"),
+        name: "Espresso",
+        price: 2.10,
+      },
+      {
+        id: 'dripcoffee',
+        img: require("../images/dripcoffee.png"),
+        name: "Drip Coffee",
+        price: 2.20,
+      },
+      {
+        id: 'coldbrew',
+        img: require("../images/coldbrew.png"),
+        name: "Cold Brew",
+        price: 3.00,
+      },
+      {
+        id: 'icetea',
+        img: require("../images/icetea.png"),
+        name: "Ice Tea",
+        price: 2.95,
+      },
+      {
+        id: 'hottea',
+        img: require("../images/hottea.png"),
+        name: "Hot Tea",
+        price: 2.95,
+      },
+      {
+        id: 'cappuccino',
+        img: require("../images/cappuccino.png"),
+        name: "Cappuccino",
+        price: 2.85,
+      },
+      {
+        id: 'latte',
+        img: require("../images/latte.png"),
+        name: "Latte",
+        price: 2.95,
+      },
+      {
+        id: 'americano',
+        img: require("../images/americano.png"),
+        name: "Americano",
+        price: 2.40,
+      }
 ];
 
 const columns = 2;
@@ -32,52 +59,83 @@ export default class Menu extends Component {
   constructor(props) {
     super();
     this.state = {
-      menu: [
-        {
-          name: 'Americano',
-          cups: 0
-        },
-        {
-          name: 'Coffee',
-          cups: 0
-        },
-        {
-          name: 'Latte',
-          cups: 0
-        }
+      customerOrder: [
+          {
+            name: "Espresso",
+            price: 2.10,
+            cups: 0
+          },
+          {
+            name: "Drip Coffee",
+            price: 2.20,
+            cups: 0
+          },
+          {
+            name: "Cold Brew",
+            price: 3.00,
+            cups: 0
+          },
+          {
+            name: "Ice Tea",
+            price: 2.95,
+            cups: 0
+          },
+          {
+            name: "Hot Tea",
+            price: 2.95,
+            cups: 0
+          },
+          {
+            name: "Cappuccino",
+            price: 2.85,
+            cups: 0
+          },
+          {
+            name: "Latte",
+            price: 2.95,
+            cups: 0
+          },
+          {
+            name: "Americano",
+            price: 2.40,
+            cups: 0
+          }
       ]
     }
   }
+  componentDidMount() {
+    // Fetch
+  }
   decreaseCounter(item, index) {
-    var update = Object.assign(this.state.menu[index]);
+    var update = Object.assign(this.state.customerOrder[index]);
     update.cups = update.cups-1;
     console.log('New drink values:', update);
     this.setState({
-      menu: [...this.state.menu.slice(0, index),
-      Object.assign({}, this.state.menu[index], update),
-      ...this.state.menu.slice(index+1)]
+      menu: [...this.state.customerOrder.slice(0, index),
+      Object.assign({}, this.state.customerOrder[index], update),
+      ...this.state.customerOrder.slice(index+1)]
     });
     console.log(this.state);
   }
   increaseCounter(item, index) {
-    var update = Object.assign(this.state.menu[index]);
+    var update = Object.assign(this.state.customerOrder[index]);
     update.cups = update.cups+1;
     console.log('New drink values:', update);
     this.setState({
-      menu: [...this.state.menu.slice(0, index),
-      Object.assign({}, this.state.menu[index], update),
-      ...this.state.menu.slice(index+1)]
+      menu: [...this.state.customerOrder.slice(0, index),
+      Object.assign({}, this.state.customerOrder[index], update),
+      ...this.state.customerOrder.slice(index+1)]
     });
   }
   renderDrink = ({item, index}) => {
-    console.log(this.state.menu[index].cups);
+    console.log(this.state.customerOrder[index].cups);
     return (
       <View item={item} style={gridStyle.item}>
       <Image source={item.img} />
           <Text style={gridStyle.itemText}>{item.name} ({item.price})</Text>
           <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={item => this.decreaseCounter(item, index)}><Text style={gridStyle.itemText}> &#8722; </Text></TouchableOpacity>
-          <Text style={gridStyle.itemText}> {this.state.menu[index].cups} </Text>
+          <Text style={gridStyle.itemText}> {this.state.customerOrder[index].cups} </Text>
           <TouchableOpacity onPress={item => this.increaseCounter(item, index)}><Text style={gridStyle.itemText}> &#43; </Text></TouchableOpacity>
         </View>
       </View>

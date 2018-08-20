@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Button } from 'react-native';
 import InnerMargin from './innerMargin';
+import Menu from './Menu.js';
 
 export default class Home extends Component {
   static navigationOptions = {
@@ -9,8 +10,8 @@ export default class Home extends Component {
 
   render() {
     return (
-
       <View style={styles.container}>
+        <Menu></Menu>
       <Button title="Show me more of the app" onPress={this._showMoreApp} />
           <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
       </View>

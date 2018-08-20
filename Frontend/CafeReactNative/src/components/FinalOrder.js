@@ -10,10 +10,9 @@ import {
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 
-
 export default class FinalOrder extends React.Component {
   static navigationOptions = {
-    title: 'Order STuff',
+    title: 'Your order',
   };
 
   render() {
@@ -26,7 +25,6 @@ export default class FinalOrder extends React.Component {
   }
 
   _signOutAsync = async () => {
-    await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   };
 }

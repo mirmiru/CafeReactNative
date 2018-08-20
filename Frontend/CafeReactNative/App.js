@@ -6,9 +6,6 @@ import FinalOrder from './src/components/FinalOrder.js';
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 
-
-
-
 class AuthLoadingScreen extends React.Component {
   static navigationOptions = {
    title: 'Please sign in',
@@ -19,16 +16,14 @@ class AuthLoadingScreen extends React.Component {
     this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
+  // Hämtar en token från localstorage. Navigerar sen till rätt plats.
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
 
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
+    // Växlar till meny-skärmen eller login-skärmen. 
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 
-  // Render any loading content that you like here
   render() {
     return (
       <View style={styles.container}>
@@ -38,7 +33,6 @@ class AuthLoadingScreen extends React.Component {
     );
   }
 }
-
 
 const AppStack = createStackNavigator({ Home: Home, Other: FinalOrder });
 const AuthStack = createStackNavigator({ SignIn: Login });

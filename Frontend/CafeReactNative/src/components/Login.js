@@ -3,42 +3,122 @@ import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-nativ
 import { Button, FormInput } from 'react-native-elements';
 import InnerMargin from './innerMargin';
 
+var localStorage;
+
 export default class Login extends Component {
   static navigationOptions = {
-     title: 'Please sign in',
-   };
+    //title: 'Please sign in',
+    header: null
+  };
 
+  componentDidMount() {
+    /*if (typeof localStorage === "undefined" || localStorage === null) {
+      localStorage = require('node-localstorage').LocalStorage;
+      localStorage = new LocalStorage('./scratch');
+    }
+    this.hydrateStateWithLocalStorage();*/
+  }
 
+  constructor(props) {
+    super(props);
+  }
+
+  hydrateStateWithLocalStorage() {
+
+    for (let key in this.state) {
+      // if the key exists in localStorage
+      if (localStorage.hasOwnProperty(key)) {
+        // get the key's value from localStorage
+        let value = localStorage.getItem(key);
+
+        // parse the localStorage string and set state
+        try {
+          value = JSON.parse(value);
+          this.setState({ [key]: value });
+        } catch (error) {
+          // handle empty string
+          this.setState({ [key]: [] });
+        }
+      } else {
+        this.setState({ [key]: [] })
+      }
+    }
+  }
+
+  addUser(email, password) {
+
+    const newUser = {
+      email: email,
+      password: password
+    };
+
+    // copy current list of items
+    var list = this.state.userList;
+
+    // add the new item to the list
+    list.push(newUser);
+
+    // update state with new list
+    this.setState({ list });
+
+    localStorage.setItem("userList", JSON.stringify(list));
+  }
+
+  loginSuccess(email, password) {
+    for (var i = 0; i < this.state.userList.length; i++) {
+      let user = this.state.userList[i];
+      if (user.email === email && user.password === password) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <View>
+
         <View style={styles.logoContainer}>
           <Image
-          style={styles.logo} source={require('../images/CafeReactNativeLogoV1.png')}/>
+            style={styles.logo} source={require('../images/CafeReactNativeLogoV1.png')}/>
           <Text style={styles.title}>Cafe React Native</Text>
         </View>
 
         <InnerMargin>
-        <FormInput placeholder="Email" style={styles.inputStyle}
-        placeholderTextColor="yellow"/>
+          <FormInput id="Email" placeholder="Email" style={styles.inputStyle}
+            placeholderTextColor="#808080"/>
         </InnerMargin>
-        <FormInput placeholder="Password" secureTextEntry={true} placeholderTextColor="yellow"/>
+        <FormInput id="Password" placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
 
         <InnerMargin></InnerMargin>
-        <Button title="Login" backgroundColor="yellow" color='black'/>
+        <Button title="Login" backgroundColor="#808080" color='black'
+          onPress={this._signInAsync}/>
 
-      </View>
-      <View style={styles.container}>
-             <Button title="Sign in!" onPress={this._signInAsync} />
-      </View>
+
+        {/*<View style={styles.container}>
+        <Button title="Sign in!" onPress={this._signInAsync} />
+        </View>*/}
+
       </KeyboardAvoidingView>
     );
   }
 
+  logIn() {
+    this.addUser('eric','3');
+
+    let emailForm = this.document.getElementById('Email');
+    let passwordForm = this.document.getElementById('Password');
+
+    console.log(emailForm.value);
+
+    if (this.loginSuccess(emailForm.value, passwordForm.value)) {
+      this.props.navigation.navigate('App');
+    }
+  }
+
   _signInAsync = async () => {
-  // await AsyncStorage.setItem('userToken', 'abc');
+    // await AsyncStorage.setItem('userToken', 'abc');
+    //logIn();
     this.props.navigation.navigate('App');
   };
 
@@ -58,12 +138,12 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120
   },
-  title: {
-    color: 'grey',
-    marginTop: 10,
-    width: 170,
-    textAlign: 'center',
-    opacity: 0.8,
-    marginTop: 14
-  }
+  // title: {
+  //   color: 'grey',
+  //   marginTop: 10,
+  //   width: 170,
+  //   textAlign: 'center',
+  //   opacity: 0.8,
+  //   marginTop: 14
+  // }
 });

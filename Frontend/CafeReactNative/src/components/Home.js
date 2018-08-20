@@ -5,15 +5,15 @@ import Menu from './Menu.js';
 
 export default class Home extends Component {
   static navigationOptions = {
-   title: 'Wellcome HOme',
- };
+    title: 'Welcome home',
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <Menu></Menu>
-      <Button title="Show me more of the app" onPress={this._showMoreApp} />
-          <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+        <Button title="Show me more of the app" onPress={this._showMoreApp} />
+        <Button title="Sign out" onPress={this._signOutAsync} />
       </View>
 
     );
@@ -24,10 +24,8 @@ export default class Home extends Component {
   };
 
   _signOutAsync = async () => {
-    await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   };
-
 }
 
 const styles = StyleSheet.create({

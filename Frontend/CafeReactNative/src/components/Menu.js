@@ -38,7 +38,8 @@ export default class Menu extends Component {
   decreaseCounter() {
     this.setState({counter: this.state.counter-1});
   }
-  increaseCounter() {
+  increaseCounter(event) {
+    console.warn(event);
     var value = this.state.counter+1;
     this.setState({counter: value});
   }

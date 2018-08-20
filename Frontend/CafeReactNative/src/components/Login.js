@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-nativ
 import { Button, FormInput } from 'react-native-elements';
 import InnerMargin from './innerMargin';
 
-var localStorage;
+import { AsyncStorage } from "react-native";
+
+var ReactDOM = require('react-dom');
+
+let USERKEY = "userList";
+
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -12,48 +17,48 @@ export default class Login extends Component {
   };
 
   componentDidMount() {
-    /*if (typeof localStorage === "undefined" || localStorage === null) {
-      localStorage = require('node-localstorage').LocalStorage;
-      localStorage = new LocalStorage('./scratch');
+    if (this.retrieveUsers() != null) {
+      this.setState({ userList: this.retrieveUsers() });
+    } else {
+      this.setState({ userList: [] });
     }
-    this.hydrateStateWithLocalStorage();*/
   }
 
   constructor(props) {
     super(props);
   }
 
-  hydrateStateWithLocalStorage() {
-
-    for (let key in this.state) {
-      // if the key exists in localStorage
-      if (localStorage.hasOwnProperty(key)) {
-        // get the key's value from localStorage
-        let value = localStorage.getItem(key);
-
-        // parse the localStorage string and set state
-        try {
-          value = JSON.parse(value);
-          this.setState({ [key]: value });
-        } catch (error) {
-          // handle empty string
-          this.setState({ [key]: [] });
-        }
-      } else {
-        this.setState({ [key]: [] })
-      }
+  async storeUsers(listOfUsers) {
+    try {
+        var jsonOfItem = await AsyncStorage.setItem(USERKEY, JSON.stringify(listOfUsers));
+        return jsonOfItem;
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
-  addUser(email, password) {
+  async retrieveUsers() {
+    try {
+      const retrievedItem =  await AsyncStorage.getItem(USERKEY);
+      const listOfUsers = JSON.parse(retrievedItem);
+      return listOfUsers;
+    } catch (error) {
+      console.log(error.message);
+    }
+    return;
+  }
 
+  addUser(email, password) {
+    if (email == null || email == undefined) {
+      console.warn("Email is null!");
+    }
     const newUser = {
       email: email,
       password: password
     };
 
-    // copy current list of items
-    var list = this.state.userList;
+    // the current list of items
+    var list = [this.state.userList];
 
     // add the new item to the list
     list.push(newUser);
@@ -61,7 +66,7 @@ export default class Login extends Component {
     // update state with new list
     this.setState({ list });
 
-    localStorage.setItem("userList", JSON.stringify(list));
+    this.storeUsers("userList", list);
   }
 
   loginSuccess(email, password) {
@@ -85,10 +90,10 @@ export default class Login extends Component {
         </View>
 
         <InnerMargin>
-          <FormInput id="Email" placeholder="Email" style={styles.inputStyle}
+          <FormInput ref='forminput' textInputRef='email' placeholder="Email" style={styles.inputStyle}
             placeholderTextColor="#808080"/>
         </InnerMargin>
-        <FormInput id="Password" placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
+        <FormInput ref='forminput' textInputRef='password' placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
 
         <InnerMargin></InnerMargin>
         <Button title="Login" backgroundColor="#808080" color='black'
@@ -104,21 +109,19 @@ export default class Login extends Component {
   }
 
   logIn() {
-    this.addUser('eric','3');
+    this.addUser('e','e');
+    let email = this.refs.forminput.refs.email;
+    let password = this.refs.forminput.refs.password;
+    /*console.warn(email);
+    console.warn(password);*/
 
-    let emailForm = this.document.getElementById('Email');
-    let passwordForm = this.document.getElementById('Password');
-
-    console.log(emailForm.value);
-
-    if (this.loginSuccess(emailForm.value, passwordForm.value)) {
+    if (this.loginSuccess(email, password)) {
       this.props.navigation.navigate('App');
     }
   }
 
   _signInAsync = async () => {
-    // await AsyncStorage.setItem('userToken', 'abc');
-    //logIn();
+    this.logIn();
     this.props.navigation.navigate('App');
   };
 

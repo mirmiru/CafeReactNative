@@ -104,7 +104,18 @@ export default class Menu extends Component {
     }
   }
   componentDidMount() {
-    // Fetch
+    console.warn('FETCHING!!!')
+   fetch('http://localhost:3000/')
+    .then(function (response, err) { return response.json();})
+    .then(function (result) {
+      this.setState((prevState) => {
+        return {originalMenu: result[0]};
+      });
+    //  console.warn(menuData);
+        console.warn(result[0]['espresso']);
+    }.bind(this)).catch((err) => {
+      console.warn('Error!!!!! :' + err );
+    });
   }
   decreaseCounter(item, index) {
     var update = Object.assign(this.state.customerOrder[index]);

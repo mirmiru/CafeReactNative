@@ -36,7 +36,7 @@ app.get('/', function (request, response) {
       return;
     }
     console.log(result);
-    response.status(200).send({});
+    response.status(200).send(result);
   });
 });
 

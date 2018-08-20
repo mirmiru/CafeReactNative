@@ -1,59 +1,51 @@
-var originalMenu = [{
-    espresso: {
+var originalMenu = [
+    {
       id: 'espresso',
+      img: require("../images/espresso.png"),
       name: "Espresso",
       price: 2.10,
-      sugar: false,
-      cups: 0
     },
-    dripcoffee: {
+    {
       id: 'dripcoffee',
+      img: require("../images/dripcoffee.png"),
       name: "Drip Coffee",
       price: 2.20,
-      sugar: false,
-      cups: 0
     },
-    coldbrew: {
+    {
       id: 'coldbrew',
+      img: require("../images/coldbrew.png"),
       name: "Cold Brew",
       price: 3.00,
-      sugar: false,
-      cups: 0
     },
-    icetea: {
+    {
       id: 'icetea',
+      img: require("../images/icetea.png"),
       name: "Ice Tea",
       price: 2.95,
-      sugar: false,
-      cups: 0
     },
-    hottea: {
+    {
       id: 'hottea',
+      img: require("../images/hottea.png"),
       name: "Hot Tea",
       price: 2.95,
-      sugar: false,
-      cups: 0
     },
-    cappuccino: {
+    {
       id: 'cappuccino',
+      img: require("../images/cappuccino.png"),
       name: "Cappuccino",
       price: 2.85,
-      sugar: false,
-      cups: 0
     },
-    latte: {
+    {
       id: 'latte',
+      img: require("../images/latte.png"),
       name: "Latte",
       price: 2.95,
-      sugar: false,
-      cups: 0
     },
-    americano: {
+    {
       id: 'americano',
+      img: require("../images/americano.png"),
       name: "Americano",
       price: 2.40,
-      sugar: false,
-      cups: 0
     }
-  }]
+];
 module.exports = originalMenu;

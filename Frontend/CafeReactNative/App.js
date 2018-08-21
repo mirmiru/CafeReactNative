@@ -20,7 +20,7 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
 
-    // Växlar till meny-skärmen eller login-skärmen. 
+    // Växlar till meny-skärmen eller login-skärmen.
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 

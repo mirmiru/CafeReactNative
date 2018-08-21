@@ -50,8 +50,9 @@ constructor(props) {
     ]
   }
 }
-// componentDidMount() {
-//  fetch('http://localhost:3000/')
+ componentDidMount() {
+   console.log(this.props.navigation.state.params.myKey);
+//  fetch('http://localhost:3000/' + this.props.navigation.state.params.myKey)
 //   .then(function (response, err) {return response.json();})
 //   .then(function (result) {
 //
@@ -60,11 +61,10 @@ constructor(props) {
 //   }.bind(this)).catch((err) => {
 //     console.warn('Error!!!!! :' + err );
 //   });
-// }
+ }
 
 
 renderDrink = ({item, index}) => {
-  summaOrder = summaOrder + item.price;
   return (
     <View item={item} style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>
       <View style={{flex: 1}}><Text style={styles.textInput} > {item.name}</Text></View>
@@ -77,7 +77,6 @@ renderDrink = ({item, index}) => {
 
   render() {
     this.state.yourOrder.forEach(function(item){ summaOrder=summaOrder+item.price });
-
     return (
       <View >
         <View style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>

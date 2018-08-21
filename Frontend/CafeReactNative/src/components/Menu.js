@@ -85,9 +85,12 @@ export default class Menu extends Component {
       },
       method: 'POST'
     }).then(response => response.json())
-      .then(result => {
+      .then(function (result) {
         console.log(result);
-      })
+    //    this.props.navigation.navigate('Other');
+      }.bind(this)).catch((err) => {
+        console.warn('Error!!!!! :' + err );
+      });
   }
   renderDrink = ({item, index}) => {
     console.log(this.state.customerOrder[index].cups);
@@ -131,6 +134,7 @@ const gridStyle = StyleSheet.create({
     justifyContent: 'space-around'
   }
 });
+
 
 
 // const menuData = [

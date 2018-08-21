@@ -92,7 +92,7 @@ class Menu extends React.Component {
         console.log('POST result:', result);
     //    this.props.navigation.navigate('Other');
     // TEST:
-      this.props.navigation.navigate('Other');
+      this.props.navigation.navigate('Other', {myKey: '123'});
       }.bind(this)).catch((err) => {
         console.warn('Error!!!!! :' + err );
       });

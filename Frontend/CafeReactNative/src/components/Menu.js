@@ -47,7 +47,6 @@ export default class Menu extends Component {
     }
   }
   componentDidMount() {
-
    fetch('http://localhost:3000/')
     .then(function (response, err) {return response.json();})
     .then(function (result) {
@@ -78,6 +77,17 @@ export default class Menu extends Component {
   placeOrder() {
     var finalOrder = this.state.customerOrder.filter(item => item.cups > 0);
     console.log('FINAL:', finalOrder);
+
+    fetch('http://localhost:3000/', {
+      body: JSON.stringify(finalOrder),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    }).then(response => response.json())
+      .then(result => {
+        console.log(result);
+      })
   }
   renderDrink = ({item, index}) => {
     console.log(this.state.customerOrder[index].cups);
@@ -95,6 +105,7 @@ export default class Menu extends Component {
   }
   render() {
     return (
+    <View>
     <FlatList keyExtractor={item => item.id} data={this.state.originalMenu} renderItem={this.renderDrink} extraData={this.state} numColumns={2}>
     </FlatList>
     <Button onPress={this.placeOrder.bind(this)} title='Place Order' />

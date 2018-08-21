@@ -5,8 +5,6 @@ import InnerMargin from './innerMargin';
 
 import { AsyncStorage } from "react-native";
 
-var ReactDOM = require('react-dom');
-
 let USERKEY = "userList";
 
 
@@ -16,16 +14,51 @@ export default class Login extends Component {
     header: null
   };
 
-  componentDidMount() {
-    if (this.retrieveUsers() != null) {
-      this.setState({ userList: this.retrieveUsers() });
+  constructor(props) {
+    super(props);
+
+    this.logIn = this.logIn.bind(this);
+  }
+
+  async componentDidMount() {
+    let listOfUsers = await this.retrieveUsers();
+
+    if (listOfUsers !== null && listOfUsers !== undefined) {
+      this.setState({ userList: listOfUsers, emailInput: "", passwordInput: "" });
     } else {
-      this.setState({ userList: [] });
+      this.setState({ userList: [], emailInput: "", passwordInput: "" });
     }
   }
 
-  constructor(props) {
-    super(props);
+  render() {
+    return (
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo} source={require('../images/CafeReactNativeLogoV1.png')}/>
+          <Text style={styles.title}>Cafe React Native</Text>
+        </View>
+
+        <InnerMargin>
+          <FormInput ref={function functionName(input) { this.emailForm = input; }.bind(this)} onChangeText={function (text) { this.state.emailInput = text; }.bind(this)} textInputRef='email'
+            placeholder="Email" style={styles.inputStyle}
+            placeholderTextColor="#808080"/>
+        </InnerMargin>
+
+        <FormInput ref={function functionName(input) { this.passwordForm = input; }.bind(this)} onChangeText={function (text) { this.state.passwordInput = text; }.bind(this)} textInputRef='password'
+          placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
+
+        <InnerMargin></InnerMargin>
+
+        <Button title="Login" backgroundColor="#808080" color='black' onPress={this._signInAsync}/>
+
+        {<View style={styles.container}>
+          <Button title="Register" onPress={this._registerAsync} />
+        </View>}
+
+      </KeyboardAvoidingView>
+    );
   }
 
   async storeUsers(listOfUsers) {
@@ -41,6 +74,10 @@ export default class Login extends Component {
     try {
       const retrievedItem =  await AsyncStorage.getItem(USERKEY);
       const listOfUsers = JSON.parse(retrievedItem);
+      if (listOfUsers !== null) {
+        console.log("Users retrieved:");
+        console.log(listOfUsers);
+      }
       return listOfUsers;
     } catch (error) {
       console.log(error.message);
@@ -49,82 +86,73 @@ export default class Login extends Component {
   }
 
   addUser(email, password) {
-    if (email == null || email == undefined) {
-      console.warn("Email is null!");
-    }
+
     const newUser = {
-      email: email,
-      password: password
+      userEmail: email,
+      userPassword: password
     };
 
-    // the current list of items
-    var list = [this.state.userList];
+    // the current list of users
+    var list = [...this.state.userList];
 
-    // add the new item to the list
+    // add the new user to the list
     list.push(newUser);
-
+    console.log("Users in list:");
+    console.log(list);
     // update state with new list
     this.setState({ list });
-
-    this.storeUsers("userList", list);
-  }
-
-  loginSuccess(email, password) {
-    for (var i = 0; i < this.state.userList.length; i++) {
-      let user = this.state.userList[i];
-      if (user.email === email && user.password === password) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  render() {
-    return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-
-        <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo} source={require('../images/CafeReactNativeLogoV1.png')}/>
-          <Text style={styles.title}>Cafe React Native</Text>
-        </View>
-
-        <InnerMargin>
-          <FormInput ref='forminput' textInputRef='email' placeholder="Email" style={styles.inputStyle}
-            placeholderTextColor="#808080"/>
-        </InnerMargin>
-        <FormInput ref='forminput' textInputRef='password' placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
-
-        <InnerMargin></InnerMargin>
-        <Button title="Login" backgroundColor="#808080" color='black'
-          onPress={this._signInAsync}/>
-
-
-        {/*<View style={styles.container}>
-        <Button title="Sign in!" onPress={this._signInAsync} />
-        </View>*/}
-
-      </KeyboardAvoidingView>
-    );
+    // save to AsyncStorage
+    this.storeUsers(list);
   }
 
   logIn() {
-    this.addUser('e','e');
-    let email = this.refs.forminput.refs.email;
-    let password = this.refs.forminput.refs.password;
-    /*console.warn(email);
-    console.warn(password);*/
+    let userEmail = this.state.emailInput;
+    let userPassword = this.state.passwordInput;
 
-    if (this.loginSuccess(email, password)) {
-      this.props.navigation.navigate('App');
+    if (userEmail !== "" && userPassword !== "") {
+      let loginSucceeded = this.loginSuccess(userEmail, userPassword);
+      if (loginSucceeded) {
+        this.props.navigation.navigate('App');
+      } else {
+        console.log('login failed...');
+      }
+    }
+  }
+
+  async loginSuccess(email, password) {
+    let listOfUsers = await this.retrieveUsers();
+
+    if (listOfUsers == null || listOfUsers == undefined) {
+      console.log("List is null in method loginSuccess");
+      return false;
+    } else {
+      for (var i = 0; i < listOfUsers.length; i++) {
+        let user = listOfUsers[i];
+
+        if (user.userEmail === email && user.userPassword === password) {
+          return true;
+        }
+      }
+      return false;
     }
   }
 
   _signInAsync = async () => {
     this.logIn();
-    this.props.navigation.navigate('App');
   };
 
+  _registerAsync = async () => {
+    let userEmail = this.state.emailInput;
+    let userPassword = this.state.passwordInput;
+
+    if (userEmail != null && userPassword != null && userEmail != "" && userPassword != "") {
+      this.addUser(userEmail, userPassword);
+      // clear text in email and password
+      this.emailForm.clearText();
+      this.passwordForm.clearText();
+      // this.props.navigation.navigate('App');
+    }
+  }
 }
 
 const styles = StyleSheet.create({

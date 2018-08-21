@@ -66,8 +66,10 @@ constructor(props) {
 renderDrink = ({item, index}) => {
   summaOrder = summaOrder + item.price;
   return (
-    <View item={item} style={styles.container}>
-    <Text style={styles.textInput}> {item.name}       Price :{item.price} Kr</Text>
+    <View item={item} style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>
+      <View style={{flex: 1}}><Text style={styles.textInput} > {item.name}</Text></View>
+      <View style={{flex: 1}}><Text style={styles.textCups} > {item.cups}</Text></View>
+      <View style={{flex: 1}}><Text style={styles.textPrice} > {item.price}</Text></View>
     </View>
   );
 }
@@ -77,10 +79,17 @@ renderDrink = ({item, index}) => {
     this.state.yourOrder.forEach(function(item){ summaOrder=summaOrder+item.price });
 
     return (
-      <View style={styles.container}>
-        <FlatList keyExtractor={item => item.id} data={this.state.yourOrder} renderItem={this.renderDrink} extraData={this.state} numColumns={1}>
-        </FlatList>
-        <Text>PRICE : {summaOrder}</Text>
+      <View >
+        <View style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>
+          <View style={{flex: 1}}><Text style={styles.textInput} > NAME</Text></View>
+          <View style={{flex: 1}}><Text style={styles.textCups} > AMOUNT</Text></View>
+          <View style={{flex: 1}}><Text style={styles.textPrice} > PRICE</Text></View>
+        </View>
+      <FlatList keyExtractor={item => item.id} data={this.state.yourOrder} renderItem={this.renderDrink} extraData={this.state} numColumns={1}>
+      </FlatList>
+        <View style={{alignItems: 'stretch'}}>
+          <Text style={styles.textSumma}>PRICE : {summaOrder}</Text>
+        </View>
       </View>
     );
   }
@@ -95,7 +104,7 @@ renderDrink = ({item, index}) => {
 
 const styles = StyleSheet.create({
   container: {
-          flex: 2,
+          flex: 1,
           flexDirection: 'column',
           width: Dimensions.get('window').width,
           height: 40,
@@ -104,5 +113,21 @@ const styles = StyleSheet.create({
     textInput: {
       fontSize: 20,
       backgroundColor: 'skyblue'
+    },
+    textPrice: {
+      fontSize: 20,
+      textAlign: 'right',
+      backgroundColor: 'skyblue'
+    },
+    textCups: {
+      textAlign: 'center',
+      fontSize: 20,
+      backgroundColor: 'skyblue'
+    },
+    textSumma: {
+      fontSize: 40,
+      backgroundColor: 'green',
+      textAlign: 'right'
     }
+
 });

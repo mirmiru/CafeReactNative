@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Button, View, Text, StyleSheet, Image, List, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import InnerMargin from './innerMargin';
 import Images from '../images/Images.js';
+import {withNavigation} from 'react-navigation';
 
 const columns = 2;
 
-export default class Menu extends Component {
+// export default class Menu extends Component {
+class Menu extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       originalMenu: [],
       customerOrder: [
@@ -89,6 +91,8 @@ export default class Menu extends Component {
       .then(function (result) {
         console.log('POST result:', result);
     //    this.props.navigation.navigate('Other');
+    // TEST:
+      this.props.navigation.navigate('Other');
       }.bind(this)).catch((err) => {
         console.warn('Error!!!!! :' + err );
       });
@@ -135,55 +139,4 @@ const gridStyle = StyleSheet.create({
   }
 });
 
-
-
-// const menuData = [
-//       {
-//         id: 'espresso',
-//         img: require("../images/espresso.png"),
-//         name: "Espresso",
-//         price: 2.10,
-//       },
-//       {
-//         id: 'dripcoffee',
-//         img: require("../images/dripcoffee.png"),
-//         name: "Drip Coffee",
-//         price: 2.20,
-//       },
-//       {
-//         id: 'coldbrew',
-//         img: require("../images/coldbrew.png"),
-//         name: "Cold Brew",
-//         price: 3.00,
-//       },
-//       {
-//         id: 'icetea',
-//         img: require("../images/icetea.png"),
-//         name: "Ice Tea",
-//         price: 2.95,
-//       },
-//       {
-//         id: 'hottea',
-//         img: require("../images/hottea.png"),
-//         name: "Hot Tea",
-//         price: 2.95,
-//       },
-//       {
-//         id: 'cappuccino',
-//         img: require("../images/cappuccino.png"),
-//         name: "Cappuccino",
-//         price: 2.85,
-//       },
-//       {
-//         id: 'latte',
-//         img: require("../images/latte.png"),
-//         name: "Latte",
-//         price: 2.95,
-//       },
-//       {
-//         id: 'americano',
-//         img: require("../images/americano.png"),
-//         name: "Americano",
-//         price: 2.40,
-//       }
-// ];
+export default withNavigation(Menu);

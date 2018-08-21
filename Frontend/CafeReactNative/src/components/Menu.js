@@ -2,56 +2,6 @@ import React, { Component } from 'react';
 import { Button, View, Text, StyleSheet, Image, List, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import InnerMargin from './innerMargin';
 
-const menuData = [
-      {
-        id: 'espresso',
-        img: require("../images/espresso.png"),
-        name: "Espresso",
-        price: 2.10,
-      },
-      {
-        id: 'dripcoffee',
-        img: require("../images/dripcoffee.png"),
-        name: "Drip Coffee",
-        price: 2.20,
-      },
-      {
-        id: 'coldbrew',
-        img: require("../images/coldbrew.png"),
-        name: "Cold Brew",
-        price: 3.00,
-      },
-      {
-        id: 'icetea',
-        img: require("../images/icetea.png"),
-        name: "Ice Tea",
-        price: 2.95,
-      },
-      {
-        id: 'hottea',
-        img: require("../images/hottea.png"),
-        name: "Hot Tea",
-        price: 2.95,
-      },
-      {
-        id: 'cappuccino',
-        img: require("../images/cappuccino.png"),
-        name: "Cappuccino",
-        price: 2.85,
-      },
-      {
-        id: 'latte',
-        img: require("../images/latte.png"),
-        name: "Latte",
-        price: 2.95,
-      },
-      {
-        id: 'americano',
-        img: require("../images/americano.png"),
-        name: "Americano",
-        price: 2.40,
-      }
-];
 
 const columns = 2;
 
@@ -59,6 +9,7 @@ export default class Menu extends Component {
   constructor(props) {
     super();
     this.state = {
+      originalMenu: [],
       customerOrder: [
           {
             name: "Espresso",
@@ -96,7 +47,14 @@ export default class Menu extends Component {
     }
   }
   componentDidMount() {
-    // Fetch
+
+   fetch('http://localhost:3000/')
+    .then(function (response, err) {return response.json();})
+    .then(function (result) {
+      this.setState({originalMenu: result});
+    }.bind(this)).catch((err) => {
+      console.warn('Error!!!!! :' + err );
+    });
   }
   decreaseCounter(item, index) {
     var update = Object.assign(this.state.customerOrder[index]);
@@ -137,8 +95,7 @@ export default class Menu extends Component {
   }
   render() {
     return (
-      <View>
-    <FlatList keyExtractor={item => item.id} data={menuData} renderItem={this.renderDrink} extraData={this.state} numColumns={2}>
+    <FlatList keyExtractor={item => item.id} data={this.state.originalMenu} renderItem={this.renderDrink} extraData={this.state} numColumns={2}>
     </FlatList>
     <Button onPress={this.placeOrder.bind(this)} title='Place Order' />
     </View>
@@ -163,3 +120,55 @@ const gridStyle = StyleSheet.create({
     justifyContent: 'space-around'
   }
 });
+
+
+// const menuData = [
+//       {
+//         id: 'espresso',
+//         img: require("../images/espresso.png"),
+//         name: "Espresso",
+//         price: 2.10,
+//       },
+//       {
+//         id: 'dripcoffee',
+//         img: require("../images/dripcoffee.png"),
+//         name: "Drip Coffee",
+//         price: 2.20,
+//       },
+//       {
+//         id: 'coldbrew',
+//         img: require("../images/coldbrew.png"),
+//         name: "Cold Brew",
+//         price: 3.00,
+//       },
+//       {
+//         id: 'icetea',
+//         img: require("../images/icetea.png"),
+//         name: "Ice Tea",
+//         price: 2.95,
+//       },
+//       {
+//         id: 'hottea',
+//         img: require("../images/hottea.png"),
+//         name: "Hot Tea",
+//         price: 2.95,
+//       },
+//       {
+//         id: 'cappuccino',
+//         img: require("../images/cappuccino.png"),
+//         name: "Cappuccino",
+//         price: 2.85,
+//       },
+//       {
+//         id: 'latte',
+//         img: require("../images/latte.png"),
+//         name: "Latte",
+//         price: 2.95,
+//       },
+//       {
+//         id: 'americano',
+//         img: require("../images/americano.png"),
+//         name: "Americano",
+//         price: 2.40,
+//       }
+// ];

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, View, Text, StyleSheet, Image, List, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import InnerMargin from './innerMargin';
-
+import Images from '../images/Images.js';
 
 const columns = 2;
 
@@ -50,6 +50,7 @@ export default class Menu extends Component {
    fetch('http://localhost:3000/')
     .then(function (response, err) {return response.json();})
     .then(function (result) {
+      console.log('Orig menu: ', result);
       this.setState({originalMenu: result});
     }.bind(this)).catch((err) => {
       console.warn('Error!!!!! :' + err );
@@ -90,10 +91,9 @@ export default class Menu extends Component {
       })
   }
   renderDrink = ({item, index}) => {
-    console.log(this.state.customerOrder[index].cups);
     return (
       <View item={item} style={gridStyle.item}>
-      <Image source={item.img} />
+      <Image source={Images[index]} />
           <Text style={gridStyle.itemText}>{item.name} ({item.price})</Text>
           <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={item => this.decreaseCounter(item, index)}><Text style={gridStyle.itemText}> &#8722; </Text></TouchableOpacity>

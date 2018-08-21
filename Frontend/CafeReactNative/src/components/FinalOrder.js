@@ -6,6 +6,9 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Text,
+  FlatList,
+  Dimensions
 } from 'react-native';
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 

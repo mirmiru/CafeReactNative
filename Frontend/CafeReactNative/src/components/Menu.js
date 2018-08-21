@@ -87,7 +87,7 @@ export default class Menu extends Component {
       method: 'POST'
     }).then(response => response.json())
       .then(function (result) {
-        console.log(result);
+        console.log('POST result:', result);
     //    this.props.navigation.navigate('Other');
       }.bind(this)).catch((err) => {
         console.warn('Error!!!!! :' + err );

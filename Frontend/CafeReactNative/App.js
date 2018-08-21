@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, AsyncStorage, ActivityIndicator, StatusBar } from 'react-native';
 import Login from './src/components/Login.js';
+import LoginV2 from './src/components/LoginV2.js';
 import Home from './src/components/Home.js';
 import FinalOrder from './src/components/FinalOrder.js';
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
@@ -20,7 +21,7 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
 
-    // Växlar till meny-skärmen eller login-skärmen. 
+    // Växlar till meny-skärmen eller login-skärmen.
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 

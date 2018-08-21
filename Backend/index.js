@@ -40,6 +40,15 @@ app.get('/', function (request, response) {
   });
 });
 
+// app.post('/', function(request, response) {
+//   var order = request.body;
+//   console.log('Order', order);
+//
+//   // db.collection('orders').insertOne(order, function(error, result){
+//   //   console.log(result);
+//   // });
+// });
+
 app.listen(3000, function () {
   console.log('this webserver is running');
 });

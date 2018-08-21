@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, List, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import { Button, View, Text, StyleSheet, Image, List, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import InnerMargin from './innerMargin';
 
 const menuData = [
@@ -62,42 +62,34 @@ export default class Menu extends Component {
       customerOrder: [
           {
             name: "Espresso",
-            price: 2.10,
             cups: 0
           },
           {
             name: "Drip Coffee",
-            price: 2.20,
             cups: 0
           },
           {
             name: "Cold Brew",
-            price: 3.00,
             cups: 0
           },
           {
             name: "Ice Tea",
-            price: 2.95,
             cups: 0
           },
           {
             name: "Hot Tea",
-            price: 2.95,
             cups: 0
           },
           {
             name: "Cappuccino",
-            price: 2.85,
             cups: 0
           },
           {
             name: "Latte",
-            price: 2.95,
             cups: 0
           },
           {
             name: "Americano",
-            price: 2.40,
             cups: 0
           }
       ]
@@ -109,7 +101,6 @@ export default class Menu extends Component {
   decreaseCounter(item, index) {
     var update = Object.assign(this.state.customerOrder[index]);
     update.cups = update.cups-1;
-    console.log('New drink values:', update);
     this.setState({
       menu: [...this.state.customerOrder.slice(0, index),
       Object.assign({}, this.state.customerOrder[index], update),
@@ -120,12 +111,15 @@ export default class Menu extends Component {
   increaseCounter(item, index) {
     var update = Object.assign(this.state.customerOrder[index]);
     update.cups = update.cups+1;
-    console.log('New drink values:', update);
     this.setState({
       menu: [...this.state.customerOrder.slice(0, index),
       Object.assign({}, this.state.customerOrder[index], update),
       ...this.state.customerOrder.slice(index+1)]
     });
+  }
+  placeOrder() {
+    var finalOrder = this.state.customerOrder.filter(item => item.cups > 0);
+    console.log('FINAL:', finalOrder);
   }
   renderDrink = ({item, index}) => {
     console.log(this.state.customerOrder[index].cups);
@@ -142,10 +136,12 @@ export default class Menu extends Component {
     );
   }
   render() {
-    console.log('Render');
     return (
+      <View>
     <FlatList keyExtractor={item => item.id} data={menuData} renderItem={this.renderDrink} extraData={this.state} numColumns={2}>
     </FlatList>
+    <Button onPress={this.placeOrder.bind(this)} title='Place Order' />
+    </View>
     );
   }
 };
@@ -164,8 +160,6 @@ const gridStyle = StyleSheet.create({
   },
   itemText: {
     color: '#ffffff',
-    // flexDirection: 'row'
     justifyContent: 'space-around'
   }
-
 });

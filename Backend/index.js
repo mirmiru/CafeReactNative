@@ -5,6 +5,8 @@ var originalMenu = require('./cafeMenu.js')
 var db;
 var bodyParser = require('body-parser');
 var uuidv4 = require('uuid/v4');
+// 1. var login = require('./login');
+// 2. node login.js (Proxy)
 
 MongoClient.connect('mongodb://localhost:27017', function (error, client) {
   if (error) {
@@ -63,6 +65,20 @@ app.post('/', function(request, response) {
     //   console.log(result);
     // })
   });
+});
+
+app.post('/login', function(request, response) {
+
+  // var username = request.body.username;
+  // var password  = request.body.password;
+
+  var {username, password} = request.body;
+
+  if (username === 'fistbump' && password === '123') {
+    response.send({}) // success, 200
+  }else {
+    response.status(401).send({}) // 401, unauthenticated
+  };
 });
 
 // get order by object id

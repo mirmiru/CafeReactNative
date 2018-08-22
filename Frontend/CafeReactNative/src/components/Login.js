@@ -34,11 +34,11 @@ export default class Login extends Component {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
 
-        <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo} source={require('../images/CafeReactNativeLogoV1.png')}/>
-          <Text style={styles.title}>Cafe React Native</Text>
-        </View>
+        <Image
+          source={require('../images/fbCoffee2.png')}/>
+        <InnerMargin></InnerMargin>
+        <Image
+          style={styles.logo} source={require('../images/fistBumpCoffee.png')}/>
 
         <InnerMargin>
           <FormInput autocorrect="off" autoCapitalize="none" autocomplete="off" ref={function functionName(input) { this.emailForm = input; }.bind(this)} onChangeText={function (text) { this.state.emailInput = text; }.bind(this)} textInputRef='email'
@@ -54,116 +54,114 @@ export default class Login extends Component {
         <Button title="Login" backgroundColor="#808080" color='black' onPress={this._signInAsync}/>
 
         {<View style={styles.container}>
-          <Button title="Register" onPress={this._registerAsync} />
-        </View>}
+        <Button title="Register" onPress={this._registerAsync} />
+      </View>}
 
-      </KeyboardAvoidingView>
-    );
+    </KeyboardAvoidingView>
+  );
+}
+
+async storeUsers(listOfUsers) {
+  try {
+    var jsonOfItem = await AsyncStorage.setItem(USERKEY, JSON.stringify(listOfUsers));
+    return jsonOfItem;
+  } catch (error) {
+    console.log(error.message);
   }
+}
 
-  async storeUsers(listOfUsers) {
-    try {
-        var jsonOfItem = await AsyncStorage.setItem(USERKEY, JSON.stringify(listOfUsers));
-        return jsonOfItem;
-    } catch (error) {
-      console.log(error.message);
+async retrieveUsers() {
+  try {
+    const retrievedItem =  await AsyncStorage.getItem(USERKEY);
+    const listOfUsers = JSON.parse(retrievedItem);
+    if (listOfUsers !== null) {
+      console.log("Users retrieved:");
+      console.log(listOfUsers);
     }
+    return listOfUsers;
+  } catch (error) {
+    console.log(error.message);
   }
+  return;
+}
 
-  async retrieveUsers() {
-    try {
-      const retrievedItem =  await AsyncStorage.getItem(USERKEY);
-      const listOfUsers = JSON.parse(retrievedItem);
-      if (listOfUsers !== null) {
-        console.log("Users retrieved:");
-        console.log(listOfUsers);
-      }
-      return listOfUsers;
-    } catch (error) {
-      console.log(error.message);
-    }
-    return;
-  }
+addUser(email, password) {
 
-  addUser(email, password) {
-
-    const newUser = {
-      userEmail: email,
-      userPassword: password
-    };
-
-    // the current list of users
-    var list = [...this.state.userList];
-
-    // add the new user to the list
-    list.push(newUser);
-    console.log("Users in list:");
-    console.log(list);
-    // update state with new list
-    this.setState({ list });
-    // save to AsyncStorage
-    this.storeUsers(list);
-  }
-
-  async logIn() {
-    let userEmail = this.state.emailInput;
-    let userPassword = this.state.passwordInput;
-    console.log(userEmail, userPassword);
-
-    if (userEmail !== "" && userPassword !== "") {
-      console.log('entered values');
-      let loginSucceeded = await this.loginSuccess(userEmail, userPassword);
-
-      if (loginSucceeded) {
-        this.props.navigation.navigate('App');
-      } else {
-        console.log('login failed...');
-      }
-    }
-  }
-
-  async loginSuccess(email, password) {
-    console.log('in place')
-    let listOfUsers = await this.retrieveUsers();
-
-    if (listOfUsers == null || listOfUsers == undefined) {
-      console.log("List is null in method loginSuccess");
-      return false;
-    } else {
-      for (var i = 0; i < listOfUsers.length; i++) {
-        let user = listOfUsers[i];
-        console.log(user);
-        if (user.userEmail === email && user.userPassword === password) {
-          console.log('Match');
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-
-  _signInAsync = async () => {
-    this.logIn();
+  const newUser = {
+    userEmail: email,
+    userPassword: password
   };
 
-  _registerAsync = async () => {
-    let userEmail = this.state.emailInput;
-    let userPassword = this.state.passwordInput;
+  // the current list of users
+  var list = [...this.state.userList];
 
-    if (userEmail != null && userPassword != null && userEmail != "" && userPassword != "") {
-      this.addUser(userEmail, userPassword);
-      // clears the text in email and password forms
-      this.emailForm.clearText();
-      this.passwordForm.clearText();
+  // add the new user to the list
+  list.push(newUser);
+  console.log("Users in list:");
+  console.log(list);
+  // update state with new list
+  this.setState({ list });
+  // save to AsyncStorage
+  this.storeUsers(list);
+}
 
+async logIn() {
+  let userEmail = this.state.emailInput;
+  let userPassword = this.state.passwordInput;
+  console.log(userEmail, userPassword);
+
+  if (userEmail !== "" && userPassword !== "") {
+    console.log('entered values');
+    let loginSucceeded = await this.loginSuccess(userEmail, userPassword);
+
+    if (loginSucceeded) {
+      this.props.navigation.navigate('App');
+    } else {
+      alert('Login failed...');
     }
   }
+}
+
+async loginSuccess(email, password) {
+  let listOfUsers = await this.retrieveUsers();
+
+  if (listOfUsers == null || listOfUsers == undefined) {
+    console.log("List is null in method loginSuccess");
+    return false;
+  } else {
+    for (var i = 0; i < listOfUsers.length; i++) {
+      let user = listOfUsers[i];
+      console.log(user);
+      if (user.userEmail === email && user.userPassword === password) {
+        console.log('Match');
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+_signInAsync = async () => {
+  this.logIn();
+};
+
+_registerAsync = async () => {
+  let userEmail = this.state.emailInput;
+  let userPassword = this.state.passwordInput;
+
+  if (userEmail != null && userPassword != null && userEmail != "" && userPassword != "") {
+    this.addUser(userEmail, userPassword);
+    // Clears the text in email and password forms. Doesn't work on iOS simulator...
+    this.emailForm.clearText();
+    this.passwordForm.clearText();
+  }
+}
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000'
+    backgroundColor: '#F7F7F7'
   },
   logoContainer: {
     alignItems: 'center',
@@ -171,15 +169,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   logo: {
-    width: 120,
-    height: 120
+    width: 140,
+    height: 140
   },
-  // title: {
-  //   color: 'grey',
-  //   marginTop: 10,
-  //   width: 170,
-  //   textAlign: 'center',
-  //   opacity: 0.8,
-  //   marginTop: 14
-  // }
+  logotext: {
+    width: 50,
+    height: 50
+  }
 });

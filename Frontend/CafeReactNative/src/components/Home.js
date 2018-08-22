@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Button } from 'react-native';
 import InnerMargin from './innerMargin';
 import Menu from './Menu.js';
+import withNavigation from 'react-navigation';
 
 export default class Home extends Component {
   static navigationOptions = {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, AsyncStorage, ActivityIndicator, StatusBar } from 'react-native';
 import Login from './src/components/Login.js';
+import LoginV2 from './src/components/LoginV2.js';
 import Home from './src/components/Home.js';
 import FinalOrder from './src/components/FinalOrder.js';
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';

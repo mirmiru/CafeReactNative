@@ -111,7 +111,8 @@ export default class Login extends Component {
 
     if (userEmail !== "" && userPassword !== "") {
       let loginSucceeded = this.loginSuccess(userEmail, userPassword);
-      if (loginSucceeded) {
+      
+      if (loginSucceeded === true) {
         this.props.navigation.navigate('App');
       } else {
         console.log('login failed...');

@@ -50,14 +50,18 @@ constructor(props) {
     ]
   }
 }
+
  componentDidMount() {
    console.log(this.props.navigation.state.params.myKey);
  fetch('http://localhost:3000/' + this.props.navigation.state.params.myKey)
   .then(function (response, err) {console.log(response);return response.json();})
   .then(function (result) {
 console.log('FINALORDER!!');
-    console.log(result);
-//      this.setState({yourOrder: result});
+    console.log(result[0]['order']);
+console.log('YourOrder!!');
+        console.log(this.state.yourOrder);
+
+     this.setState({yourOrder: result[0]['order']});
   }.bind(this)).catch((err) => {
     console.warn('Error!!!!! :' + err );
   });

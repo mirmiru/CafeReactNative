@@ -91,7 +91,8 @@ class Menu extends React.Component {
       .then(function (result) {
         console.log('POST result:', result);
     //    this.props.navigation.navigate('Other');
-    // TEST:
+
+    // myKey ska vara order keyn som skapas av mongo
       this.props.navigation.navigate('Other', {myKey: '5b7bdd809fac3626e4fcad13'});
       }.bind(this)).catch((err) => {
         console.warn('Error!!!!! :' + err );

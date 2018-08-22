@@ -108,11 +108,13 @@ export default class Login extends Component {
   logIn() {
     let userEmail = this.state.emailInput;
     let userPassword = this.state.passwordInput;
+    console.log(userEmail, userPassword);
 
     if (userEmail !== "" && userPassword !== "") {
+      console.log('enetered values');
       let loginSucceeded = this.loginSuccess(userEmail, userPassword);
-      
-      if (loginSucceeded === true) {
+
+      if (loginSucceeded) {
         this.props.navigation.navigate('App');
       } else {
         console.log('login failed...');
@@ -129,8 +131,9 @@ export default class Login extends Component {
     } else {
       for (var i = 0; i < listOfUsers.length; i++) {
         let user = listOfUsers[i];
-
+        console.log(user);
         if (user.userEmail === email && user.userPassword === password) {
+          console.log('Match');
           return true;
         }
       }

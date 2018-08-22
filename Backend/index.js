@@ -4,6 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 var originalMenu = require('./cafeMenu.js')
 var db;
 var bodyParser = require('body-parser');
+var uuidv4 = require('uuid/v4');
 
 MongoClient.connect('mongodb://localhost:27017', function (error, client) {
   if (error) {
@@ -47,19 +48,20 @@ app.get('/', function (request, response) {
 
 app.post('/', function(request, response) {
   var order = {
+    _id: uuidv4(),
     order: request.body
   };
 
   db.collection('orders').insertOne(order, function(error, result){
-    response.status(200).send(result);
+    response.status(200).send(order);
 
     //Koden nedan är endast för att se hur orders collection ser ut. Onödigt egentligen.
-    db.collection('orders').find().toArray(function (error, result){
-      if (error) {
-        console.log(error);
-      }
-      console.log(result);
-    })
+    // db.collection('orders').find().toArray(function (error, result){
+    //   if (error) {
+    //     console.log(error);
+    //   }
+    //   console.log(result);
+    // })
   });
 });
 

@@ -50,11 +50,13 @@ class Menu extends React.Component {
   }
   componentDidMount() {
    fetch('http://localhost:3000/')
-    .then(function (response, err) {return response.json();})
+    .then(function (response, err) {
+      return response.json();
+    })
     .then(function (result) {
       console.log('Orig menu: ', result);
-      this.setState({originalMenu: result});
-    }.bind(this)).catch((err) => {
+      this.setState({originalMenu: result})
+    }.bind(this)).catch(err => {
       console.warn('Error!!!!! :' + err );
     });
   }

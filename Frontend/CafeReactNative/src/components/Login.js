@@ -108,8 +108,10 @@ export default class Login extends Component {
   logIn() {
     let userEmail = this.state.emailInput;
     let userPassword = this.state.passwordInput;
+    console.log(userEmail, userPassword);
 
     if (userEmail !== "" && userPassword !== "") {
+      console.log('enetered values');
       let loginSucceeded = this.loginSuccess(userEmail, userPassword);
 
       if (loginSucceeded) {
@@ -121,6 +123,7 @@ export default class Login extends Component {
   }
 
   async loginSuccess(email, password) {
+    console.log('in place')
     let listOfUsers = await this.retrieveUsers();
 
     if (listOfUsers == null || listOfUsers == undefined) {
@@ -129,9 +132,9 @@ export default class Login extends Component {
     } else {
       for (var i = 0; i < listOfUsers.length; i++) {
         let user = listOfUsers[i];
-        console.log(user.userEmail, email);
-        console.log(user.userPassword, password);
+        console.log(user);
         if (user.userEmail === email && user.userPassword === password) {
+          console.log('Match');
           return true;
         }
       }

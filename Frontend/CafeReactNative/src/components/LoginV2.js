@@ -77,6 +77,7 @@ export default class LoginV2 extends Component {
         //alert test
         onPress={this.login}
         />
+        <InnerMargin></InnerMargin>
 
       </KeyboardAvoidingView>
     );
@@ -85,7 +86,7 @@ export default class LoginV2 extends Component {
   login = () => {
 
     //alert('test');
-    alert(this.state.username);
+    // alert(this.state.username);
 
     fetch('http://localhost:3000/login', {
       method: 'POST',
@@ -107,8 +108,10 @@ export default class LoginV2 extends Component {
         // AsyncStorage.setItem('user, res.user');
         console.log('Kollar om inne i');
         this.props.navigation.navigate('App');
+        alert('🤜WELCOME SuperUser🤛🏿\n [Drinks on the house]');
       } else {
         // alert(res.message);
+        alert('Lemme see this is not a Barista 🤷\n [Unauthorized]');
         console.log('inne i else unauth');
       }
     })

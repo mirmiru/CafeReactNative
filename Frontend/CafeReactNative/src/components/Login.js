@@ -41,12 +41,12 @@ export default class Login extends Component {
         </View>
 
         <InnerMargin>
-          <FormInput ref={function functionName(input) { this.emailForm = input; }.bind(this)} onChangeText={function (text) { this.state.emailInput = text; }.bind(this)} textInputRef='email'
+          <FormInput autocorrect="off" autoCapitalize="none" autocomplete="off" ref={function functionName(input) { this.emailForm = input; }.bind(this)} onChangeText={function (text) { this.state.emailInput = text; }.bind(this)} textInputRef='email'
             placeholder="Email" style={styles.inputStyle}
             placeholderTextColor="#808080"/>
         </InnerMargin>
 
-        <FormInput ref={function functionName(input) { this.passwordForm = input; }.bind(this)} onChangeText={function (text) { this.state.passwordInput = text; }.bind(this)} textInputRef='password'
+        <FormInput autocorrect="off" autoCapitalize="none" autocomplete="off" ref={function functionName(input) { this.passwordForm = input; }.bind(this)} onChangeText={function (text) { this.state.passwordInput = text; }.bind(this)} textInputRef='password'
           placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
 
         <InnerMargin></InnerMargin>

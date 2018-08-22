@@ -54,14 +54,6 @@ app.post('/', function(request, response) {
 
   db.collection('orders').insertOne(order, function(error, result){
     response.status(200).send(order);
-
-    //Koden nedan är endast för att se hur orders collection ser ut. Onödigt egentligen.
-    // db.collection('orders').find().toArray(function (error, result){
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    //   console.log(result);
-    // })
   });
 });
 
@@ -76,7 +68,6 @@ db.collection('orders').find({"_id": request.params.key}).toArray(function (erro
   console.log(result);
   response.status(200).send(result);
 });
-
 
 });
 

@@ -15,35 +15,43 @@ class Menu extends React.Component {
       customerOrder: [
           {
             name: "Espresso",
-            cups: 0
+            cups: 0,
+            price: 2.10
           },
           {
             name: "Drip Coffee",
-            cups: 0
+            cups: 0,
+            price: 2.20
           },
           {
             name: "Cold Brew",
-            cups: 0
+            cups: 0,
+            price: 3.00
           },
           {
             name: "Ice Tea",
-            cups: 0
+            cups: 0,
+            price: 2.95
           },
           {
             name: "Hot Tea",
-            cups: 0
+            cups: 0,
+            price: 2.95
           },
           {
             name: "Cappuccino",
-            cups: 0
+            cups: 0,
+            price: 2.85
           },
           {
             name: "Latte",
-            cups: 0
+            cups: 0,
+            price: 2.95
           },
           {
             name: "Americano",
-            cups: 0
+            cups: 0,
+            price: 2.40
           }
       ]
     }

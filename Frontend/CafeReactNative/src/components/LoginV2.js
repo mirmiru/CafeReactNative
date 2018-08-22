@@ -49,6 +49,7 @@ export default class LoginV2 extends Component {
 
         <FormInput
         placeholder="Username"
+        autoCapitalize="none"
         style={styles.inputStyle}
         placeholderTextColor="#808080"
         //onChangeText={ (username) => {console.log(username);}}
@@ -59,6 +60,7 @@ export default class LoginV2 extends Component {
 
         <FormInput
         placeholder="Password"
+        autoCapitalize="none"
         secureTextEntry={true}
         placeholderTextColor="#808080"
         onChangeText={ (password) => this.setState({password}) }
@@ -100,11 +102,14 @@ export default class LoginV2 extends Component {
     .then((response) => response.json())
     .then ((res) => {
 
-      if(res.success === true) {
-        AsyncStorage.setItem('user, res.user');
+      console.log(res);
+      if(res.login) {
+        // AsyncStorage.setItem('user, res.user');
+        console.log('Kollar om inne i');
         this.props.navigation.navigate('App');
       } else {
-        alert(res.message);
+        // alert(res.message);
+        console.log('inne i else unauth');
       }
     })
     .done();

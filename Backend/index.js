@@ -61,15 +61,16 @@ app.post('/', function(request, response) {
 
 app.post('/login', function(request, response) {
 
+  console.log('this is the server', request.body);
   // var username = request.body.username;
   // var password  = request.body.password;
 
   var {username, password} = request.body;
 
-  if (username === 'fistbump' && password === '123') {
-    response.send({}) // success, 200
+  if (request.body.username === 'fistbump' && request.body.password === '123') {
+    response.send({login: true}); // success, 200
   }else {
-    response.status(401).send({}) // 401, unauthenticated
+    response.status(401).send({}); // 401, unauthenticated
   };
 });
 

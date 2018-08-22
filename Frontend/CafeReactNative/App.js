@@ -36,7 +36,7 @@ class AuthLoadingScreen extends React.Component {
 }
 
 const AppStack = createStackNavigator({ Home: Home, Other: FinalOrder });
-const AuthStack = createStackNavigator({ SignIn: Login });
+const AuthStack = createStackNavigator({ SignIn: LoginV2 });
 
 export default createSwitchNavigator(
   {

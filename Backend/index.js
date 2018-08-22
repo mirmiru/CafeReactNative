@@ -56,14 +56,6 @@ app.post('/', function(request, response) {
 
   db.collection('orders').insertOne(order, function(error, result){
     response.status(200).send(order);
-
-    //Koden nedan är endast för att se hur orders collection ser ut. Onödigt egentligen.
-    // db.collection('orders').find().toArray(function (error, result){
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    //   console.log(result);
-    // })
   });
 });
 
@@ -82,9 +74,9 @@ app.post('/login', function(request, response) {
 });
 
 // get order by object id
-app.get('/:key', function (request, response) {
+app.get('/order/:key', function (request, response) {
 console.log(request.params.key);
-db.collection('orders').find({"_id": new ObjectId(request.params.key)}).toArray(function (error, result) {
+db.collection('orders').find({"_id": request.params.key}).toArray(function (error, result) {
   if (error) {
     response.status(500).send({});
     return;
@@ -92,7 +84,6 @@ db.collection('orders').find({"_id": new ObjectId(request.params.key)}).toArray(
   console.log(result);
   response.status(200).send(result);
 });
-
 
 });
 

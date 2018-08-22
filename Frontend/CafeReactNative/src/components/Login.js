@@ -105,14 +105,14 @@ export default class Login extends Component {
     this.storeUsers(list);
   }
 
-  logIn() {
+  async logIn() {
     let userEmail = this.state.emailInput;
     let userPassword = this.state.passwordInput;
     console.log(userEmail, userPassword);
 
     if (userEmail !== "" && userPassword !== "") {
-      console.log('enetered values');
-      let loginSucceeded = this.loginSuccess(userEmail, userPassword);
+      console.log('entered values');
+      let loginSucceeded = await this.loginSuccess(userEmail, userPassword);
 
       if (loginSucceeded) {
         this.props.navigation.navigate('App');
@@ -152,10 +152,10 @@ export default class Login extends Component {
 
     if (userEmail != null && userPassword != null && userEmail != "" && userPassword != "") {
       this.addUser(userEmail, userPassword);
-      // clear text in email and password
+      // clears the text in email and password forms
       this.emailForm.clearText();
       this.passwordForm.clearText();
-      // this.props.navigation.navigate('App');
+
     }
   }
 }

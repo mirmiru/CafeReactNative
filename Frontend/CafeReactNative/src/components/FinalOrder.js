@@ -52,15 +52,15 @@ constructor(props) {
 }
  componentDidMount() {
    console.log(this.props.navigation.state.params.myKey);
-//  fetch('http://localhost:3000/' + this.props.navigation.state.params.myKey)
-//   .then(function (response, err) {return response.json();})
-//   .then(function (result) {
-//
-//     console.log(result);
-// //    this.setState({yourOrder: result});
-//   }.bind(this)).catch((err) => {
-//     console.warn('Error!!!!! :' + err );
-//   });
+ fetch('http://localhost:3000/' + this.props.navigation.state.params.myKey)
+  .then(function (response, err) {console.log(response);return response.json();})
+  .then(function (result) {
+console.log('FINALORDER!!');
+    console.log(result);
+//      this.setState({yourOrder: result});
+  }.bind(this)).catch((err) => {
+    console.warn('Error!!!!! :' + err );
+  });
  }
 
 
@@ -84,7 +84,7 @@ renderDrink = ({item, index}) => {
           <View style={{flex: 1}}><Text style={styles.textCups} > AMOUNT</Text></View>
           <View style={{flex: 1}}><Text style={styles.textPrice} > PRICE</Text></View>
         </View>
-      <FlatList keyExtractor={item => item.id} data={this.state.yourOrder} renderItem={this.renderDrink} extraData={this.state} numColumns={1}>
+      <FlatList keyExtractor={item => item.name} data={this.state.yourOrder} renderItem={this.renderDrink} extraData={this.state} numColumns={1}>
       </FlatList>
         <View style={{alignItems: 'stretch'}}>
           <Text style={styles.textSumma}>PRICE : {summaOrder}</Text>

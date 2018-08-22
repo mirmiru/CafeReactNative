@@ -66,9 +66,9 @@ app.post('/', function(request, response) {
 });
 
 // get order by object id
-app.get('/:key', function (request, response) {
+app.get('/order/:key', function (request, response) {
 console.log(request.params.key);
-db.collection('orders').find({"_id": new ObjectId(request.params.key)}).toArray(function (error, result) {
+db.collection('orders').find({"_id": request.params.key}).toArray(function (error, result) {
   if (error) {
     response.status(500).send({});
     return;

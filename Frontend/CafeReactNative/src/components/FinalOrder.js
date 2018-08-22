@@ -52,12 +52,12 @@ constructor(props) {
 }
 
  componentDidMount() {
-   console.log(this.props.navigation.state.params.myKey);
- fetch('http://localhost:3000/' + this.props.navigation.state.params.myKey)
+  // console.log(this.props.navigation.state.params.myKey);
+ fetch('http://localhost:3000/order/' + this.props.navigation.state.params.myKey)
   .then(function (response, err) {console.log(response);return response.json();})
   .then(function (result) {
 console.log('FINALORDER!!');
-    console.log(result[0]['order']);
+    console.log(result);
 console.log('YourOrder!!');
         console.log(this.state.yourOrder);
 

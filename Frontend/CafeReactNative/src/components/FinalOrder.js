@@ -62,6 +62,14 @@ console.log('YourOrder!!');
         console.log(this.state.yourOrder);
 
      this.setState({yourOrder: result[0]['order']});
+     var ex = 0;
+      result[0]['order'].forEach(function(item){
+        ex=ex+(item.price*item.cups);
+        });
+
+        this.setState({summaOrder : ex.toFixed(2) });
+        console.log('SUMMAORDER!!');
+      console.log(this.state.summaOrder);
   }.bind(this)).catch((err) => {
     console.warn('Error!!!!! :' + err );
   });
@@ -73,14 +81,14 @@ renderDrink = ({item, index}) => {
     <View item={item} style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>
       <View style={{flex: 1}}><Text style={styles.textInput} > {item.name}</Text></View>
       <View style={{flex: 1}}><Text style={styles.textCups} > {item.cups}</Text></View>
-      <View style={{flex: 1}}><Text style={styles.textPrice} > {item.price}</Text></View>
+      <View style={{flex: 1}}><Text style={styles.textPrice} > {item.price*item.cups}</Text></View>
     </View>
   );
 }
 
 
   render() {
-    this.state.yourOrder.forEach(function(item){ summaOrder=summaOrder+item.price });
+
     return (
       <View >
         <View style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>
@@ -91,7 +99,7 @@ renderDrink = ({item, index}) => {
       <FlatList keyExtractor={item => item.name} data={this.state.yourOrder} renderItem={this.renderDrink} extraData={this.state} numColumns={1}>
       </FlatList>
         <View style={{alignItems: 'stretch'}}>
-          <Text style={styles.textSumma}>PRICE : {summaOrder}</Text>
+          <Text style={styles.textSumma}>PRICE : {this.state.summaOrder}</Text>
         </View>
       </View>
     );

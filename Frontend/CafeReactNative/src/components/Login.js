@@ -123,6 +123,7 @@ export default class Login extends Component {
   }
 
   async loginSuccess(email, password) {
+    console.log('in place')
     let listOfUsers = await this.retrieveUsers();
 
     if (listOfUsers == null || listOfUsers == undefined) {

@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, Image, KeyboardAvoidingView, AsyncStorage } fro
 import { Button, FormInput } from 'react-native-elements';
 import InnerMargin from './innerMargin';
 
-//import ToastAndroid from 'react-native-simple-toast';
-
 let USERKEY = "userList";
 let ERRORLOGIN = "Login failed...";
 let ACCOUNTCREATION = "Account created!";
@@ -123,7 +121,6 @@ async logIn() {
       this.props.navigation.navigate('App');
     } else {
       alert(ERRORLOGIN);
-      //ToastAndroid.show(ERRORLOGIN);
     }
   }
 }

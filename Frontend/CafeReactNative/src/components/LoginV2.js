@@ -34,7 +34,7 @@ export default class LoginV2 extends Component {
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        
+
 
         <View style={styles.logoContainer}>
           <Image
@@ -49,6 +49,7 @@ export default class LoginV2 extends Component {
 
         <FormInput
         placeholder="Username"
+        autoCapitalize="none"
         style={styles.inputStyle}
         placeholderTextColor="#808080"
         //onChangeText={ (username) => {console.log(username);}}
@@ -59,6 +60,7 @@ export default class LoginV2 extends Component {
 
         <FormInput
         placeholder="Password"
+        autoCapitalize="none"
         secureTextEntry={true}
         placeholderTextColor="#808080"
         onChangeText={ (password) => this.setState({password}) }
@@ -85,7 +87,7 @@ export default class LoginV2 extends Component {
     //alert('test');
     alert(this.state.username);
 
-    fetch('https://effortmanager.kinetive.fi/api/200612/auth/login', {
+    fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -100,11 +102,14 @@ export default class LoginV2 extends Component {
     .then((response) => response.json())
     .then ((res) => {
 
-      if(res.success === true) {
-        AsyncStorage.setItem('user, res.user');
+      console.log(res);
+      if(res.login) {
+        // AsyncStorage.setItem('user, res.user');
+        console.log('Kollar om inne i');
         this.props.navigation.navigate('App');
       } else {
-        alert(res.message);
+        // alert(res.message);
+        console.log('inne i else unauth');
       }
     })
     .done();

@@ -15,35 +15,43 @@ class Menu extends React.Component {
       customerOrder: [
           {
             name: "Espresso",
-            cups: 0
+            cups: 0,
+            price: 2.10
           },
           {
             name: "Drip Coffee",
-            cups: 0
+            cups: 0,
+            price: 2.20
           },
           {
             name: "Cold Brew",
-            cups: 0
+            cups: 0,
+            price: 3.00
           },
           {
             name: "Ice Tea",
-            cups: 0
+            cups: 0,
+            price: 2.95
           },
           {
             name: "Hot Tea",
-            cups: 0
+            cups: 0,
+            price: 2.95
           },
           {
             name: "Cappuccino",
-            cups: 0
+            cups: 0,
+            price: 2.85
           },
           {
             name: "Latte",
-            cups: 0
+            cups: 0,
+            price: 2.95
           },
           {
             name: "Americano",
-            cups: 0
+            cups: 0,
+            price: 2.40
           }
       ]
     }
@@ -89,10 +97,11 @@ class Menu extends React.Component {
       method: 'POST'
     }).then(response => response.json())
       .then(function (result) {
-        console.log('POST result:', result);
+      console.log('POST HUH?:', result['_id']);
     //    this.props.navigation.navigate('Other');
-    // TEST:
-      this.props.navigation.navigate('Other', {myKey: '123'});
+
+    // myKey ska vara order keyn som skapas av mongo
+      this.props.navigation.navigate('Other', {myKey: result['_id']});
       }.bind(this)).catch((err) => {
         console.warn('Error!!!!! :' + err );
       });

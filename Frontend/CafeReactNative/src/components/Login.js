@@ -41,12 +41,12 @@ export default class Login extends Component {
         </View>
 
         <InnerMargin>
-          <FormInput ref={function functionName(input) { this.emailForm = input; }.bind(this)} onChangeText={function (text) { this.state.emailInput = text; }.bind(this)} textInputRef='email'
+          <FormInput autocorrect="off" autoCapitalize="none" autocomplete="off" ref={function functionName(input) { this.emailForm = input; }.bind(this)} onChangeText={function (text) { this.state.emailInput = text; }.bind(this)} textInputRef='email'
             placeholder="Email" style={styles.inputStyle}
             placeholderTextColor="#808080"/>
         </InnerMargin>
 
-        <FormInput ref={function functionName(input) { this.passwordForm = input; }.bind(this)} onChangeText={function (text) { this.state.passwordInput = text; }.bind(this)} textInputRef='password'
+        <FormInput autocorrect="off" autoCapitalize="none" autocomplete="off" ref={function functionName(input) { this.passwordForm = input; }.bind(this)} onChangeText={function (text) { this.state.passwordInput = text; }.bind(this)} textInputRef='password'
           placeholder="Password" secureTextEntry={true} placeholderTextColor="#808080"/>
 
         <InnerMargin></InnerMargin>
@@ -105,12 +105,15 @@ export default class Login extends Component {
     this.storeUsers(list);
   }
 
-  logIn() {
+  async logIn() {
     let userEmail = this.state.emailInput;
     let userPassword = this.state.passwordInput;
+    console.log(userEmail, userPassword);
 
     if (userEmail !== "" && userPassword !== "") {
-      let loginSucceeded = this.loginSuccess(userEmail, userPassword);
+      console.log('entered values');
+      let loginSucceeded = await this.loginSuccess(userEmail, userPassword);
+
       if (loginSucceeded) {
         this.props.navigation.navigate('App');
       } else {
@@ -120,6 +123,7 @@ export default class Login extends Component {
   }
 
   async loginSuccess(email, password) {
+    console.log('in place')
     let listOfUsers = await this.retrieveUsers();
 
     if (listOfUsers == null || listOfUsers == undefined) {
@@ -128,8 +132,9 @@ export default class Login extends Component {
     } else {
       for (var i = 0; i < listOfUsers.length; i++) {
         let user = listOfUsers[i];
-
+        console.log(user);
         if (user.userEmail === email && user.userPassword === password) {
+          console.log('Match');
           return true;
         }
       }
@@ -147,10 +152,10 @@ export default class Login extends Component {
 
     if (userEmail != null && userPassword != null && userEmail != "" && userPassword != "") {
       this.addUser(userEmail, userPassword);
-      // clear text in email and password
+      // clears the text in email and password forms
       this.emailForm.clearText();
       this.passwordForm.clearText();
-      // this.props.navigation.navigate('App');
+
     }
   }
 }

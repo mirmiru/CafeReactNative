@@ -34,7 +34,7 @@ export default class LoginV2 extends Component {
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        
+
 
         <View style={styles.logoContainer}>
           <Image
@@ -85,7 +85,7 @@ export default class LoginV2 extends Component {
     //alert('test');
     alert(this.state.username);
 
-    fetch('https://effortmanager.kinetive.fi/api/200612/auth/login', {
+    fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

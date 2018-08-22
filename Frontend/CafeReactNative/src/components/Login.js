@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 import { Button, FormInput } from 'react-native-elements';
 import InnerMargin from './innerMargin';
 
-import { AsyncStorage } from "react-native";
+//import ToastAndroid from 'react-native-simple-toast';
 
 let USERKEY = "userList";
-
+let ERRORLOGIN = "Login failed...";
+let ACCOUNTCREATION = "Account created!";
 
 export default class Login extends Component {
   static navigationOptions = {
-    //title: 'Please sign in',
     header: null
   };
 
@@ -34,13 +34,16 @@ export default class Login extends Component {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
 
-        <Image
+        <View style={styles.logoContainer}>
+          <Image
           source={require('../images/fbCoffee2.png')}/>
-        <InnerMargin></InnerMargin>
-        <Image
+          <InnerMargin></InnerMargin>
+          <Image
           style={styles.logo} source={require('../images/fistBumpCoffee.png')}/>
+        </View>
 
         <InnerMargin>
+
           <FormInput autocorrect="off" autoCapitalize="none" autocomplete="off" ref={function functionName(input) { this.emailForm = input; }.bind(this)} onChangeText={function (text) { this.state.emailInput = text; }.bind(this)} textInputRef='email'
             placeholder="Email" style={styles.inputStyle}
             placeholderTextColor="#808080"/>
@@ -51,12 +54,14 @@ export default class Login extends Component {
 
         <InnerMargin></InnerMargin>
 
-        <Button title="Login" backgroundColor="#808080" color='black' onPress={this._signInAsync}/>
+        <Button title="Login" borderRadius={10} backgroundColor="#00EFD1" onPress={this._signInAsync}/>
 
-        {<View style={styles.container}>
-        <Button title="Register" onPress={this._registerAsync} />
-      </View>}
+        <InnerMargin></InnerMargin>
 
+
+        <Button title="Register" borderRadius={10} onPress={this._registerAsync} />
+
+        <InnerMargin></InnerMargin>
     </KeyboardAvoidingView>
   );
 }
@@ -117,7 +122,8 @@ async logIn() {
     if (loginSucceeded) {
       this.props.navigation.navigate('App');
     } else {
-      alert('Login failed...');
+      alert(ERRORLOGIN);
+      //ToastAndroid.show(ERRORLOGIN);
     }
   }
 }
@@ -154,6 +160,8 @@ _registerAsync = async () => {
     // Clears the text in email and password forms. Doesn't work on iOS simulator...
     this.emailForm.clearText();
     this.passwordForm.clearText();
+    //ToastAndroid.show(ACCOUNTCREATION);
+    alert('Account created!');
   }
 }
 }

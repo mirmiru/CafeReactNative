@@ -13,8 +13,7 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <Menu></Menu>
-        <Button title="Show me more of the app" onPress={this._showMoreApp} />
-        <Button title="Sign out" onPress={this._signOutAsync} />
+        
       </View>
 
     );

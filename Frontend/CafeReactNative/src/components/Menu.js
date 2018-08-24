@@ -119,16 +119,24 @@ class Menu extends React.Component {
       </View>
     );
   }
+
+
   render() {
     return (
     <View>
     <FlatList keyExtractor={item => item.id} data={this.state.originalMenu} renderItem={this.renderDrink} extraData={this.state} numColumns={2}>
     </FlatList>
     <Button onPress={this.placeOrder.bind(this)} title='Place Order' />
+    <Button title="Sign out" onPress={this._signOutAsync} />
     </View>
     );
   }
+  _signOutAsync = async () => {
+    this.props.navigation.navigate('Auth');
+  };
 };
+
+
 
 const gridStyle = StyleSheet.create({
   container: {

@@ -13,7 +13,7 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <Menu></Menu>
-        
+
       </View>
 
     );
@@ -23,9 +23,7 @@ export default class Home extends Component {
     this.props.navigation.navigate('Other');
   };
 
-  _signOutAsync = async () => {
-    this.props.navigation.navigate('Auth');
-  };
+
 }
 
 const styles = StyleSheet.create({

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button, View, Text, StyleSheet, Image, List, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import InnerMargin from './innerMargin';
 import Images from '../images/Images.js';
-import {withNavigation} from 'react-navigation';
+import { withNavigation } from 'react-navigation';
+import { Icon } from 'react-native-elements'
 
 const columns = 2;
 
@@ -68,12 +69,14 @@ class Menu extends React.Component {
   }
   decreaseCounter(item, index) {
     var update = Object.assign(this.state.customerOrder[index]);
-    update.cups = update.cups-1;
-    this.setState({
-      menu: [...this.state.customerOrder.slice(0, index),
-      Object.assign({}, this.state.customerOrder[index], update),
-      ...this.state.customerOrder.slice(index+1)]
-    });
+    if (update.cups > 0) {
+      update.cups = update.cups-1;
+      this.setState({
+        menu: [...this.state.customerOrder.slice(0, index),
+        Object.assign({}, this.state.customerOrder[index], update),
+        ...this.state.customerOrder.slice(index+1)]
+      });
+    }
     console.log(this.state);
   }
   increaseCounter(item, index) {
@@ -98,7 +101,6 @@ class Menu extends React.Component {
     }).then(response => response.json())
       .then(function (result) {
       console.log('POST HUH?:', result['_id']);
-    //    this.props.navigation.navigate('Other');
 
     // myKey ska vara order keyn som skapas av mongo
       this.props.navigation.navigate('Other', {myKey: result['_id']});
@@ -112,9 +114,9 @@ class Menu extends React.Component {
       <Image source={Images[index]} />
           <Text style={gridStyle.itemText}>{item.name} ({item.price})</Text>
           <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={item => this.decreaseCounter(item, index)}><Text style={gridStyle.itemText}> &#8722; </Text></TouchableOpacity>
-          <Text style={gridStyle.itemText}> {this.state.customerOrder[index].cups} </Text>
-          <TouchableOpacity onPress={item => this.increaseCounter(item, index)}><Text style={gridStyle.itemText}> &#43; </Text></TouchableOpacity>
+          <Icon name='ios-remove' type='ionicon' color='#4D243D' size={32} onPress={item => this.decreaseCounter(item, index)} />
+          <Text style={gridStyle.itemText}> {' '+this.state.customerOrder[index].cups+' '} </Text>
+          <Icon name='ios-add' type='ionicon' color='#4D243D' size={32} onPress={item => this.increaseCounter(item, index)} />
         </View>
       </View>
     );
@@ -144,14 +146,15 @@ const gridStyle = StyleSheet.create({
     marginVertical: 20,
   },
   item: {
-    backgroundColor: '#4D243D',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,
     height: Dimensions.get('window').width / 2
   },
   itemText: {
-    color: '#ffffff',
+    fontSize: 20,
+    color: '#4D243D',
     justifyContent: 'space-around'
   }
 });

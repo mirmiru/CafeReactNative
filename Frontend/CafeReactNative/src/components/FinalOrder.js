@@ -79,11 +79,12 @@ console.log('YourOrder!!');
 
 
 renderDrink = ({item, index}) => {
+  var c = item.price*item.cups;
   return (
     <View item={item} style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>
       <View style={{flex: 1}}><Text style={styles.textInput} > {item.name}</Text></View>
       <View style={{flex: 1}}><Text style={styles.textCups} > {item.cups}</Text></View>
-      <View style={{flex: 1}}><Text style={styles.textPrice} > {item.price*item.cups}</Text></View>
+      <View style={{flex: 1}}><Text style={styles.textPrice} > {c.toFixed(2)}</Text></View>
     </View>
   );
 }
@@ -93,7 +94,7 @@ renderDrink = ({item, index}) => {
 
     return (
       <View >
-        <View style={{ padding: 1, flexDirection: 'row', width: Dimensions.get('window').width}}>
+        <View style={{backgroundColor: '#ac22cc', padding: 4, flexDirection: 'row', width: Dimensions.get('window').width}}>
           <View style={{flex: 1}}><Text style={styles.textInput} > NAME</Text></View>
           <View style={{flex: 1}}><Text style={styles.textCups} > AMOUNT</Text></View>
           <View style={{flex: 1}}><Text style={styles.textPrice} > PRICE</Text></View>
@@ -162,22 +163,24 @@ const styles = StyleSheet.create({
 
     },
     textInput: {
-      fontSize: 20,
-      backgroundColor: 'skyblue'
+      padding: 4,
+      fontSize: 20
     },
     textPrice: {
+      padding: 4,
       fontSize: 20,
-      textAlign: 'right',
-      backgroundColor: 'skyblue'
+      textAlign: 'right'
+
     },
     textCups: {
+      padding: 4,
       textAlign: 'center',
-      fontSize: 20,
-      backgroundColor: 'skyblue'
+      fontSize: 20
     },
     textSumma: {
       fontSize: 40,
-      backgroundColor: 'green',
+      textDecorationLine: 'underline',
+      color: 'purple',
       textAlign: 'right'
     }
 

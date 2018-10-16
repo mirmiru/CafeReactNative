@@ -13,8 +13,7 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <Menu></Menu>
-        <Button title="Show me more of the app" onPress={this._showMoreApp} />
-        <Button title="Sign out" onPress={this._signOutAsync} />
+
       </View>
 
     );
@@ -24,9 +23,7 @@ export default class Home extends Component {
     this.props.navigation.navigate('Other');
   };
 
-  _signOutAsync = async () => {
-    this.props.navigation.navigate('Auth');
-  };
+
 }
 
 const styles = StyleSheet.create({

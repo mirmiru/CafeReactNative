@@ -76,7 +76,7 @@ export default class LoginV2 extends Component {
         //onPress={this._signInAsync}
         //alert test
         onPress={this.login}
-        />
+          />
         <InnerMargin></InnerMargin>
 
       </KeyboardAvoidingView>

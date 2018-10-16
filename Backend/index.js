@@ -106,6 +106,20 @@ app.get('/:user', function(request, response) {
   });
 });
 
+// Delete order id with DELETE
+app.delete('/order/:id', function(request, response) {
+  db.collection('orders').deleteOne(
+    { _id: request.params.id},
+    function (error, result) {
+      if (error) {
+        return response.sendStatus(404);
+      }
+      response.send({});
+    }
+  );
+});
+
+
 app.listen(3000, function () {
   console.log('this webserver is running');
 });

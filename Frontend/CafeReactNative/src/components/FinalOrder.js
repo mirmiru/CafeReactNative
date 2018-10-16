@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
-  Button,
   StatusBar,
   StyleSheet,
   View,
@@ -11,6 +10,9 @@ import {
   Dimensions
 } from 'react-native';
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { Button, FormInput } from 'react-native-elements';
+import { Icon } from 'react-native-elements'
+import InnerMargin from './innerMargin.js';
 
 var summaOrder = 0;
 
@@ -100,10 +102,48 @@ renderDrink = ({item, index}) => {
       </FlatList>
         <View style={{alignItems: 'stretch'}}>
           <Text style={styles.textSumma}>PRICE : {this.state.summaOrder}</Text>
+
+          <InnerMargin></InnerMargin>
+          <InnerMargin></InnerMargin>
+          <InnerMargin></InnerMargin>
+          <InnerMargin></InnerMargin>
+          <InnerMargin></InnerMargin>
+          <InnerMargin></InnerMargin>
+            <Button
+              title='Delete'
+              buttonStyle={{
+                backgroundColor: "rgba(255,0,0, 1)",
+                width: 150,
+                height: 45,
+                borderColor: "transparent",
+                borderWidth: 0,
+                borderRadius: 25
+              }}
+              onPress={this.delete}
+              />
+
         </View>
       </View>
     );
   }
+
+delete = () => {
+  let key = this.props.navigation.state.params.myKey
+  console.log(key);
+  console.log("3");
+
+  fetch('http://localhost:3000/order/' + key, {
+    method: 'DELETE'
+  })
+  .then(function (response, err) {
+    if (!response.ok) {
+      alert('Failed')
+      return
+    }
+      //if 200..300
+    alert('Deleted order id: ' + key)
+  })
+}
 
 
 // vet inte om vi behöver
